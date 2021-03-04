@@ -1,0 +1,6 @@
+<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;">
+    <div class="navbar-header">
+        <a href="#" class="navbar-minimalize minimalize-styl-2 btn btn-primary"><i class="fa fa-bars"></i></a>
+        
+    </div>
+</nav>
