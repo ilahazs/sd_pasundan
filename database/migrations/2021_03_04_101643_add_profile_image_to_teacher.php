@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserIdToSiswaTable extends Migration
+class AddProfileImageToTeacher extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUserIdToSiswaTable extends Migration
      */
     public function up()
     {
-        Schema::table('student', function (Blueprint $table) {
-            $table->bigInteger('user_id')->after('id');
+        Schema::table('teacher', function (Blueprint $table) {
+            $table->longtext('profile_image')->nullable()->after('phone');
         });
     }
 
@@ -25,8 +25,8 @@ class AddUserIdToSiswaTable extends Migration
      */
     public function down()
     {
-        Schema::table('student', function (Blueprint $table) {
-            $table->dropColumn('user_id');
+        Schema::table('teacher', function (Blueprint $table) {
+            $table->dropColumn('profile_image');
         });
     }
 }
