@@ -8,8 +8,7 @@ Route::group(['middleware' => 'role:admin'],  function(){
         Route::get('/', 'TeacherController@index')->name('teacher');
         Route::get('create', 'TeacherController@create');
         Route::post('/', 'TeacherController@store');
-        Route::get('{teacher}/edit', 'TeacherController@edit');
-        Route::post('{teacher}', 'TeacherController@update');
+        
         Route::get('{teacher}/delete', 'TeacherController@destroy');
     });
     
@@ -31,7 +30,11 @@ Route::group(['middleware' => 'role:admin,teacher'],  function(){
         Route::get('{student}/edit', 'StudentController@edit');
         Route::post('{student}', 'StudentController@update');
         Route::get('{student}/delete', 'StudentController@destroy');
-        Route::post('tablestudent', 'StudentController@tableSiswa')->name('tablestudent');
+        Route::post('tablestudent', 'StudentController@table')->name('tablestudent');
+    });
+    Route::prefix('teacher')->group(function (){
+        Route::get('{teacher}/edit', 'TeacherController@edit');
+        Route::post('{teacher}', 'TeacherController@update');
     });
 });
 

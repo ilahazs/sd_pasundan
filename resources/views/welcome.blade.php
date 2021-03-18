@@ -72,13 +72,9 @@
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <div class="container">
-                    <div class="carousel-caption">
-                        <h1>This World is<br/>
-                            full of Magic Things,<br/>
-                            patiently waiting for<br/>
-                            our senses <br/> 
-                            to grow sharper</h1>
-                        <p>- W.B Yeats -</p>
+                    <div class="carousel-caption col-md-5">
+                        <h1>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem, voluptatibus.</h1>
+                        <p>Lorem, ipsum dolor.</p>
                         <p>
                             <a class="btn btn-lg btn-primary" href="#" role="button">READ MORE</a>
                             <!-- <a class="caption-link" href="#" role="button">Inspinia Theme</a> -->

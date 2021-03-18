@@ -57,13 +57,13 @@ class TeacherController extends Controller
         $user->password = Hash::make($input['password']);
         $user->role = 'teacher';
         if($user->save()){
-            $student = new Teacher;
-            $student->name = $input['name'];
-            $student->nip = $input['nip'];
-            $student->gender = $input['gender'];
-            $student->phone = '+62'.$input['phone'];
-            $student->user_id = $user->id;
-            $student->save();
+            $teacher = new Teacher;
+            $teacher->name = $input['name'];
+            $teacher->nip = $input['nip'];
+            $teacher->gender = $input['gender'];
+            $teacher->phone = '+62'.$input['phone'];
+            $teacher->user_id = $user->id;
+            $teacher->save();
         }
         return redirect('admin/teacher');
     }
@@ -87,8 +87,17 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
+        if (auth()->user()->role == 'teacher') {
+            $validation = Teacher::where('user_id', auth()->user()->id)->first();
+            if ($validation->id != $id) {
+                return redirect()->back();
+            }
+        }
         $data['teacher'] = Teacher::find($id);
         $data['teacher']->phone = ltrim($data['teacher']->phone, '+62');
+        if($data['teacher']->profile_image == null){
+            $data['teacher']->profile_image = 'user-default-profile.png';
+        }
         
         $data['user'] = User::find($data['teacher']->user_id);
         return view('teacher.edit',$data);
@@ -103,6 +112,12 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (auth()->user()->role == 'teacher') {
+            $validation = Teacher::where('user_id', auth()->user()->id)->first();
+            if ($validation->id != $id) {
+                return redirect()->back();
+            }
+        }
         $request->validate([
             'name' => 'required',
             'nip' => 'required',
@@ -113,14 +128,23 @@ class TeacherController extends Controller
 
         $input = $request->all();
         
-        //insert to user
-        $student = Teacher::find($id);
-        $student->name = $input['name'];
-        $student->nip = $input['nip'];
-        $student->gender = $input['gender'];
-        $student->phone = '+62'.$input['phone'];
+        //insert to teacher
+        $teacher = Teacher::find($id);
+        $teacher->name = $input['name'];
+        $teacher->nip = $input['nip'];
+        $teacher->gender = $input['gender'];
+        $teacher->phone = '+62'.$input['phone'];
+        if(!empty($request->file('profile_image')))
+        {
+            $image = $request->file('profile_image');
+            $filename = time()."_".$image->getClientOriginalName();
+            $folderDest = 'img/profile-image';
+            $image->move($folderDest,$filename);
+            // return $filename;
+            $teacher->profile_image = $filename;
+        }
 
-        $user = User::find($student->user_id);
+        $user = User::find($teacher->user_id);
         $user->name = $input['name'];
         $user->email = $input['email'];
         $user->role = 'teacher';
@@ -131,7 +155,11 @@ class TeacherController extends Controller
             $user->password = Hash::make($input['password']);
         }            
         if($user->update()){
-            $student->update();
+            $teacher->update();
+        }
+        
+        if (auth()->user()->role == 'teacher') {
+            return redirect('/profile/myProfile');
         }
         return redirect('admin/teacher');
     }

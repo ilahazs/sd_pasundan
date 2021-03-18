@@ -2,7 +2,7 @@
     <ul class="nav metismenu" id="side-menu">
         <li class="nav-header">
             <div class="dropdown profile-element">
-                <img src="{{asset('img/admin.jpg')}}" style="width: 60px;" alt="image" class="rounded-circle">
+                <!-- <img src="{{asset('img/admin.jpg')}}" style="width: 60px;" alt="image" class="rounded-circle"> -->
                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                     <span class="block m-t-xs font-bold">{{auth()->user()->name}}</span>
                     <span class="text-muted text-xs block">{{ucfirst(auth()->user()->role)}}<b class="caret"></b></span>

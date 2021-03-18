@@ -13,6 +13,9 @@ class AuthController extends Controller
     }
     public function postlogin(Request $request)
     {
+        $request->validate([
+            'email' => 'required|exists:users',
+        ]);
         if (Auth::attempt($request->only('email', 'password'))) {
             return redirect('/admin/dashboard');
         }

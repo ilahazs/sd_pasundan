@@ -19,14 +19,14 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $data['siswa'] = Student::all();
-        return view('siswa.index', $data);
+        $data['student'] = Student::all();
+        return view('student.index', $data);
     }
 
     public function tableSiswa(Request $request)
     {
         $data = Student::select('*');
-        // dd($data);
+        return $data;
         return DataTables::eloquent($data)->toJson();
     }
 
@@ -37,7 +37,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('siswa.add');
+        return view('student.add');
     }
 
     /**
@@ -102,7 +102,7 @@ class StudentController extends Controller
         $data['siswa']->phone = ltrim($data['siswa']->phone, '+62');
         $data['user'] = User::find($data['siswa']->user_id);
 
-        return view('siswa.edit', $data);
+        return view('student.edit', $data);
     }
 
     /**
