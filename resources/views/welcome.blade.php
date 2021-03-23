@@ -16,7 +16,7 @@
 
     <style>
         .landing-page .header-back.one {
-            background: linear-gradient(to bottom, rgb(216 50 0 / 18%) 0, rgb(216 50 0 / 20%) 50%), url("{{asset('landing-page/image/'.$header_back->content)}}") 50% 50% no-repeat;
+            background: linear-gradient(to bottom, rgb(216 50 0 / 18%) 0, rgb(216 50 0 / 20%) 50%), url("{{asset('landing-page/image/'.$image_1)}}") 50% 50% no-repeat;
             background-size: 100%;
         }
     </style>
@@ -81,7 +81,7 @@
                         </p>
                     </div>
                     <div class="carousel-image wow zoomIn">
-                        <img src="{{asset('landing-page/image/laptop.png')}}" style="width:532px;" alt="laptop"/>
+                        <img src="{{asset('landing-page/image/'.$image_2)}}" style="width:180px;" alt="laptop"/>
                     </div>
                 </div>
                 <!-- Set background for slide in css -->
@@ -135,7 +135,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-center  wow zoomIn">
-                <img src="{{asset('landing-page/image/perspective.png')}}" alt="dashboard" class="img-fluid">
+                <img src="{{asset('landing-page/image/'.$image_3)}}" style="width:360px;" alt="dashboard" class="img-fluid">
             </div>
             <div class="col-md-3 text-center wow fadeInRight">
                 <div>
@@ -169,7 +169,7 @@
                     <a href="#" class="btn btn-sm btn-primary">Learn more</a>
                 </div>
                 <div class="col-lg-6 text-right wow fadeInRight">
-                    <img src="{{asset('landing-page/image/dashboard.jpg')}}" alt="dashboard" class="img-fluid float-right">
+                    <img src="{{asset('landing-page/image/'.$image_4)}}" alt="dashboard" class="img-fluid float-right">
                 </div>
             </div>
         </div>
@@ -231,7 +231,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="team-member wow zoomIn">
-                        <img src="{{asset('landing-page/image/perspective.png')}}" class="img-fluid rounded-circle" alt="">
+                        <img src="{{asset('landing-page/image/'.$image_5)}}" class="img-fluid rounded-circle" alt="">
                         <h4><span class="navy">Bapak/Ibu Kepala Sekolah</span> S.Pd</h4>
                         <p>Headmaster</p>
                         <ul class="list-inline social-icon">
@@ -246,7 +246,7 @@
                 </div>
                 <div class="col-sm-4 wow fadeInRight">
                     <div class="team-member">
-                        <img src="{{asset('landing-page/image/perspective.png')}}" class="img-fluid rounded-circle img-small" alt="">
+                        <img src="{{asset('landing-page/image/'.$image_6)}}" class="img-fluid rounded-circle img-small" alt="">
                         <h4><span class="navy">Bapak/Ibu Wakil Kepala</span> M.M.Pd</h4>
                         <p>Wakasek Kesiswaan</p>
                         <ul class="list-inline social-icon">
@@ -321,7 +321,7 @@
                     </div>
                     <div class="comments-avatar">
                         <a href="" class="float-left">
-                            <img alt="image" src="img/avatar3.jpg">
+                            <img alt="image" src="{{asset('landing-page/image/'.$image_7)}}">
                         </a>
                         <div class="media-body">
                             <div class="commens-name">
@@ -338,7 +338,7 @@
                     </div>
                     <div class="comments-avatar">
                         <a href="" class="float-left">
-                            <img alt="image" src="img/avatar1.jpg">
+                            <img alt="image" src="{{asset('landing-page/image/'.$image_8)}}">
                         </a>
                         <div class="media-body">
                             <div class="commens-name">
@@ -355,7 +355,7 @@
                     </div>
                     <div class="comments-avatar">
                         <a href="" class="float-left">
-                            <img alt="image" src="img/avatar2.jpg">
+                            <img alt="image" src="{{asset('landing-page/image/'.$image_9)}}">
                         </a>
                         <div class="media-body">
                             <div class="commens-name">

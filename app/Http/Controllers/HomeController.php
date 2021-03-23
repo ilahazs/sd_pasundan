@@ -10,7 +10,11 @@ class HomeController extends Controller
     public function index()
     {
         $home = Home::all();
-        $data['header_back'] = $home->where('section', '=', 'image_1')->first();
+        $totalImage = $home->where('type', '=', 'image')->count();
+        for ($i=1; $i < $totalImage+1; $i++) { 
+            $data['image_'.$i] = $home->where('section', '=', 'image_'.$i)->first();
+            $data['image_'.$i] = $data['image_'.$i]->content;
+        }
         return view('welcome', $data);
     }
 }

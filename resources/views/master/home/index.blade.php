@@ -27,11 +27,11 @@
         <div class="ibox">
             <div class="ibox-title">
                 <h5>Master Data Home</h5>
-                <div class="ibox-tools mb-10">
+                <!-- <div class="ibox-tools mb-10">
                     <a href="{{route('home.create')}}" class="mr-4 btn btn-primary btn-sm">
                         Add Data
                     </a>
-                </div>
+                </div> -->
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
@@ -55,9 +55,9 @@
                                         <a href="home/{{$row->id}}/edit" class="btn-warning btn btn-sm mr-2"
                                             data-toggle="tooltip" data-placement="top" title="Edit"><i
                                                 class="fa fa-edit"></i></a>
-                                        <a href="home/{{$row->id}}/delete"
+                                        <!-- <a href="home/{{$row->id}}/delete"
                                             class="edit btn btn-danger btn-sm delete-btn mr-2" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
+                                            data-placement="top" title="Delete"><i class="fa fa-trash"></i></a> -->
                                     </div>
                                 </td>
                             </tr>
