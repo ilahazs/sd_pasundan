@@ -53,9 +53,9 @@
                                     <td>{{$row->nisn}}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="student/{{$row->id}}/show" class="btn-dark btn btn-sm mr-2"
+                                            <!-- <a href="student/{{$row->id}}/show" class="btn-dark btn btn-sm mr-2"
                                                 data-toggle="tooltip" data-placement="top" title="View"><i
-                                                    class="fa fa-eye"></i></a>
+                                                    class="fa fa-eye"></i></a> -->
                                             <a href="student/{{$row->id}}/edit" class="btn-warning btn btn-sm mr-2"
                                                 data-toggle="tooltip" data-placement="top" title="Edit"><i
                                                     class="fa fa-edit"></i></a>

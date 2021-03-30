@@ -50,7 +50,7 @@
                                 <td>{{$row->section}}</td>
                                 <td>{{$row->content}}</td>
                                 <td>{{$row->type}}</td>
-                                <td>
+                                <td class="dataTables-empty">
                                     <div class="btn-group">
                                         <a href="home/{{$row->id}}/edit" class="btn-warning btn btn-sm mr-2"
                                             data-toggle="tooltip" data-placement="top" title="Edit"><i
