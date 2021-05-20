@@ -7,21 +7,22 @@
 @endsection
 
 @section('heading')
-    <h2>Tambah Guru Baru</h2>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{{url('/')}}">Home</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{url('/admin/teacher')}}">Guru Table</a>
-        </li>
-        <li class="breadcrumb-item">
-            <strong>Add Guru</strong>
-        </li>
-    </ol>
+<h2>Tambah Guru Baru</h2>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{{url('/')}}">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{url('/admin/teacher')}}">Guru Table</a>
+    </li>
+    <li class="breadcrumb-item">
+        <strong>Add Guru</strong>
+    </li>
+</ol>
 @endsection
 
 @section('content')
+<div class="row">
     <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
@@ -33,11 +34,12 @@
                     <div class="form-group row">
                         <label for="Name" class="col-lg-2 col-form-label">Name</label>
                         <div class="col-lg-10">
-                            <input value="{{old('name')}}" required type="text" name="name" id="name" class="form-control">
+                            <input value="{{old('name')}}" required type="text" name="name" id="name"
+                                class="form-control">
                             @error('name')
-                                <li class="text-danger">
-                                    <strong>{{ $message }}</strong>
-                                </li>
+                            <li class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </li>
                             @enderror
                         </div>
                     </div>
@@ -46,14 +48,15 @@
                         <div class="col-lg-10">
                             <input value="{{old('nip')}}" required type="text" name="nip" id="nip" class="form-control">
                             @error('nip')
-                                <li class="text-danger">
-                                    <strong>{{ $message }}</strong>
-                                </li>
+                            <li class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </li>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Jenis Kelamin" class="col-lg-2 col-form-label" selected disabled>Jenis Kelamin</label>
+                        <label for="Jenis Kelamin" class="col-lg-2 col-form-label" selected disabled>Jenis
+                            Kelamin</label>
                         <div class="col-lg-5">
                             <select required name="gender" id="gender" class="form-control">
                                 <option value="">- PILIH JENIS KELAMIN -</option>
@@ -61,9 +64,9 @@
                                 <option {{ old('gender') == 'p' ? "selected" : "" }} value="p">Perempuan</option>
                             </select>
                             @error('gender')
-                                <li class="text-danger">
-                                    <strong>{{ $message }}</strong>
-                                </li>
+                            <li class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </li>
                             @enderror
                         </div>
                         <label for="Phone" class="col-lg-1 col-form-label">Phone</label>
@@ -72,12 +75,13 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-addon">+62</span>
                                 </div>
-                                <input value="{{old('phone')}}" required type="text" name="phone" id="phone" class="form-control">
+                                <input value="{{old('phone')}}" required type="text" name="phone" id="phone"
+                                    class="form-control">
                             </div>
                             @error('phone')
-                                <li class="text-danger">
-                                    <strong>{{ $message }}</strong>
-                                </li>
+                            <li class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </li>
                             @enderror
                         </div>
                     </div>
@@ -89,22 +93,24 @@
                             <div class="form-group row">
                                 <label for="Email" class="col-lg-2 col-form-label">Email</label>
                                 <div class="col-lg-10">
-                                    <input required value="{{old('email')}}" type="email" name="email" id="email" class="form-control">
+                                    <input required value="{{old('email')}}" type="email" name="email" id="email"
+                                        class="form-control">
                                     @error('email')
-                                        <li class="text-danger">
-                                            <strong>{{ $message }}</strong>
-                                        </li>
+                                    <li class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </li>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Password" class="col-lg-2 col-form-label">Password</label>
                                 <div class="col-lg-10">
-                                    <input required value="{{old('password')}}" type="password" name="password" id="password" class="form-control">
+                                    <input required value="{{old('password')}}" type="password" name="password"
+                                        id="password" class="form-control">
                                     @error('password')
-                                        <li class="text-danger">
-                                            <strong>{{ $message }}</strong>
-                                        </li>
+                                    <li class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </li>
                                     @enderror
                                 </div>
                             </div>
@@ -121,4 +127,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection

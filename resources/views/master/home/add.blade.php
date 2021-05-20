@@ -6,21 +6,22 @@
 @endsection
 
 @section('heading')
-    <h2>Tambah Data Home</h2>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{{url('/')}}">Home</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{url('/admin/master/home')}}">Data Home Table</a>
-        </li>
-        <li class="breadcrumb-item">
-            <strong>Add Data</strong>
-        </li>
-    </ol>
+<h2>Tambah Data Home</h2>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{{url('/')}}">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{url('/admin/master/home')}}">Data Home Table</a>
+    </li>
+    <li class="breadcrumb-item">
+        <strong>Add Data</strong>
+    </li>
+</ol>
 @endsection
 
 @section('content')
+<div class="row">
     <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-title">
@@ -43,7 +44,8 @@
                         <div class="col-lg-10">
                             <select required onchange="itemChange()" name="type" id="type" class="form-control">
                                 <option value="" selected disabled>- PILIH TYPE -</option>
-                                <option {{ old('type') == 'wording' ? "selected" : "" }} value="wording">Wording</option>
+                                <option {{ old('type') == 'wording' ? "selected" : "" }} value="wording">Wording
+                                </option>
                                 <option {{ old('type') == 'image' ? "selected" : "" }} value="image">Image</option>
                             </select>
                         </div>
@@ -64,14 +66,15 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 @section('scripts')
 <script>
-    function itemChange() {
-        $('.item-content').empty();
-        var type = $('#type').val();
-        if(type == 'image'){
-            var content = `<label class="label-image">
+function itemChange() {
+    $('.item-content').empty();
+    var type = $('#type').val();
+    if (type == 'image') {
+        var content = `<label class="label-image">
                                 <img id="preview-image" class="m-xs img-md" hidden>
                                 <div class="btn-group-sm text-center">
                                     <label class="btn btn-primary" id="image-btn">
@@ -85,24 +88,24 @@
                                     <strong>{{ $message }}</strong>
                                 </li>
                             @enderror`;
-        }
-        else{
-            var content = `<input value="{{old('content')}}" type="text" name="content" id="content" class="form-control">`;
-        }
-        $('.item-content').append(content);
+    } else {
+        var content = `<input value="{{old('content')}}" type="text" name="content" id="content" class="form-control">`;
     }
-    function changePreviewImage() {
-        var inputImage = $('#input-image').get(0).files[0];
-        if(inputImage){
-            $("#preview-image").attr("hidden", false);
-            $(`.fa.fa-paperclip#image-btn`).attr("class", "fa fa-pencil-square-o");
-            $(`.btn.btn-primary#image-btn`).attr("class", "btn btn-warning");
-            var reader = new FileReader();
-            reader.onload = function(){
-                $("#preview-image").attr("src", reader.result);
-            }
-            reader.readAsDataURL(inputImage);
+    $('.item-content').append(content);
+}
+
+function changePreviewImage() {
+    var inputImage = $('#input-image').get(0).files[0];
+    if (inputImage) {
+        $("#preview-image").attr("hidden", false);
+        $(`.fa.fa-paperclip#image-btn`).attr("class", "fa fa-pencil-square-o");
+        $(`.btn.btn-primary#image-btn`).attr("class", "btn btn-warning");
+        var reader = new FileReader();
+        reader.onload = function() {
+            $("#preview-image").attr("src", reader.result);
         }
+        reader.readAsDataURL(inputImage);
     }
+}
 </script>
 @endsection

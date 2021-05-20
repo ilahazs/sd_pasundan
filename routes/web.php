@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth'],  function(){
             require_once(dirname(__FILE__).'/admin.php');
     });
     Route::group(['prefix' => 'profile'], function (){
-        Route::get('myProfile', 'ProfileController@myProfile');
+        Route::get('myProfile', 'ProfileController@myProfile')->name('myProfile');
     });
 });
 // Route::get('/siswa')
