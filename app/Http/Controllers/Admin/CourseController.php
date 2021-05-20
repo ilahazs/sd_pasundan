@@ -21,7 +21,7 @@ class CourseController extends BaseController
                 ->addIndexColumn()
                 ->addColumn('action', function ($row)
                 {
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary editCourse">Update</a>';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning editCourse">Update</a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteCourse">Delete</a>';
                     return $btn;
                 })
@@ -65,27 +65,16 @@ class CourseController extends BaseController
         $data = Course::find($id);
         return response()->json($data);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
-        //
+        $data = Course::find($id);
+        if (!$data) {
+            return response()->json([
+                'error' => 'Data not found.'
+            ]);
+        }
+        $data->delete();
+        return response()->json(['success'=>'Course deleted successfully.']);
     }
 }

@@ -37,6 +37,7 @@ Route::group(['middleware' => 'role:admin,teacher'],  function(){
         Route::get('/', 'CourseController@index')->name('course');
         Route::post('/', 'CourseController@store')->name('course.store');
         Route::get('/{course}/edit', 'CourseController@edit')->name('course.edit');
+        Route::get('/{course}/delete', 'CourseController@destroy')->name('course.destroy');
     });
     Route::prefix('teacher')->group(function (){
         Route::get('{teacher}/edit', 'TeacherController@edit');

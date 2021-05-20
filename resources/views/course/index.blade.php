@@ -3,6 +3,7 @@
 
 @section('head')
 <link href="{{asset('css/plugins/dataTables/datatables.min.css')}}" rel="stylesheet">
+<link href="{{asset('css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 @endsection
 
 @section('heading')
@@ -95,6 +96,7 @@
 @section('scripts')
 <script src="{{asset('js/plugins/dataTables/datatables.min.js')}}"></script>
 <script src="{{asset('js/plugins/dataTables/dataTables.bootstrap4.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.4/dist/sweetalert2.all.min.js"></script>
 <script>
 $(function() {
     $.ajaxSetup({
@@ -130,7 +132,7 @@ $(function() {
     });
 
     $('body').on('click', '.editCourse', function () {
-        var course_id = $(this).data('id');
+        var course_id = $(this).data("id");
         $.get("{{ route('course') }}" + '/' + course_id + '/edit', function (data) {
             $('#courseForm').trigger("reset");
             $('.course_code_group').show(true);
@@ -161,6 +163,45 @@ $(function() {
             error: function(data) {
                 console.log('Error:', data);
                 $('#saveBtn').html('Save Changes').attr('disabled', false);
+            }
+        })
+    })
+
+    $('body').on('click', '.deleteCourse', function () {
+        var course_id = $(this).data("id");
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#ed5565',
+            cancelButtonColor: '#343a40',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('course') }}" + '/' + course_id + '/delete',
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.error) {
+                            Swal.fire(
+                                'Error!',
+                                data.error,
+                                'error'
+                            );
+                        }
+                        Swal.fire(
+                            'Deleted!',
+                            data.success,
+                            'success'
+                        );
+                        table.draw();
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                    }
+                });
             }
         })
     })
