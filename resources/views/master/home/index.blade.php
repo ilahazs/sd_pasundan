@@ -28,7 +28,7 @@
             <div class="ibox-title">
                 <h5>Master Data Home</h5>
                 <!-- <div class="ibox-tools mb-10">
-                    <a href="{{route('home.create')}}" class="mr-4 btn btn-primary btn-sm">
+                    <a href="{{route('master.home.create')}}" class="mr-4 btn btn-primary btn-sm">
                         Add Data
                     </a>
                 </div> -->

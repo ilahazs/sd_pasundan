@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SD Pasundan | Login</title>
+    <title>YPDM Pasundan | Login</title>
 
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
@@ -21,7 +21,7 @@
             <div>
                 <img class="logo-name" src="{{asset('img/logo.png')}}" alt="logo">
             </div>
-            <h3>Welcome to SD PASUNDAN</h3>
+            <h3>Yayasan Pendidikan Dasar dan Menengah Pasundan</h3>
             <p>Login</p>
             <form method="POST" class="m-t" role="form" action="{{url('/postlogin')}}">
                 @csrf
@@ -47,7 +47,12 @@
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
                 <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a> -->
             </form>
-            <p class="m-t"> <small>&copy; SD PASUNDAN</small> </p>
+            <p class="m-t">
+                <small>
+                    Jalan Babakan Ciparay 112/194A Telp. (022) 6026149 <br> Bandung 40221 <br>
+                    NPSN : 20219816 NSS. 104026015023 <br> Email: sdpasundan2@gmail.com
+                </small>
+            </p>
         </div>
     </div>
     <!-- Mainly scripts -->
