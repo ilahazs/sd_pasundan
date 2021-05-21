@@ -41,6 +41,10 @@
                 <li class="{{ Request::segment(3) === 'home' ? 'active' : null }}"><a
                         href="{{ route('master.home') }}">Home</a></li>
             </ul>
+            <ul class="nav nav-second-level">
+                <li class="{{ Request::segment(3) === 'class' ? 'active' : null }}"><a
+                        href="{{ route('master.class') }}">Kelas</a></li>
+            </ul>
         </li>
         @endif
     </ul>

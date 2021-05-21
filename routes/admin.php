@@ -14,12 +14,24 @@ Route::group(['middleware' => 'role:admin'],  function(){
         Route::get('{teacher}/delete', 'TeacherController@destroy');
     });
     Route::prefix('master')->group(function(){
-        Route::get('home', 'HomeController@index')->name('master.home');
-        Route::post('home', 'HomeController@store');
-        Route::get('home/create', 'HomeController@create')->name('master.home.create');
-        Route::get('home/{home}/delete', 'HomeController@destroy');
-        Route::get('home/{home}/edit', 'HomeController@edit');
-        Route::post('home/{home}/update', 'HomeController@update');
+        Route::prefix('home')->group(function(){
+            Route::get('/', 'HomeController@index')->name('master.home');
+            Route::post('/', 'HomeController@store');
+            Route::get('/create', 'HomeController@create')->name('master.home.create');
+            Route::get('/{home}/delete', 'HomeController@destroy');
+            Route::get('/{home}/edit', 'HomeController@edit');
+            Route::post('/{home}/update', 'HomeController@update');
+        });
+
+        Route::prefix('class')->group(function(){
+            Route::get('/', 'MasterClassController@index')->name('master.class');
+        });
+
+        Route::prefix('grade')->group(function(){
+            Route::get('/', 'GradeController@tableGrade')->name('master.grade');
+            Route::post('/', 'GradeController@store')->name('master.grade.store');
+            Route::get('/{grade}/edit', 'GradeController@edit')->name('master.grade.edit');
+        });
     });
     
 });
