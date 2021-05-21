@@ -1,21 +1,21 @@
 <!-- modal -->
-<div class="modal inmodal" id="gradeModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal inmodal" id="variableModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h5 class="modal-title">Tambah Mata Pelajaran</h5>
+                <h5 class="modal-title">Tambah Variable</h5>
             </div>
             <div class="modal-body">
-                <form id="gradeForm" name="gradeForm" onkeydown="return event.key != 'Enter';">
+                <form id="variableForm" name="variableForm" onkeydown="return event.key != 'Enter';">
                     @csrf
-                    <input type="hidden" name="grade_id" id="grade_id">
+                    <input type="hidden" name="variable_id" id="variable_id">
                     <div class="form-group">
-                        <label for="Grade" class="col-form-label">Grade</label>
-                        <input value="{{old('grade_name')}}" required type="text" name="grade_name" id="grade_name"
+                        <label for="Variable" class="col-form-label">Variable</label>
+                        <input value="{{old('variable_name')}}" required type="text" name="variable_name" id="variable_name"
                             class="form-control">
-                        @error('grade_name')
+                        @error('variable_name')
                         <li class="text-danger">
                             <strong>{{ $message }}</strong>
                         </li>
@@ -25,7 +25,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn" class="btn btn-primary">Save changes</button>
+                <button type="button" id="saveVariable" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
 <div class="col-lg-12">
     <div class="ibox">
         <div class="ibox-title">
-            <h5>Grade</h5>
+            <h5>Variable</h5>
             <div class="ibox-tools mt-1">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -45,17 +45,17 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="javascript:void(0)" id="createNewGrade" class="dropdown-item">Tambah Grade</a>
+                        <a href="javascript:void(0)" id="createNewVariable" class="dropdown-item">Tambah Variable</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="ibox-content">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover dataTables-example">
+                <table class="table table-striped table-bordered table-hover dataTables-variable">
                     <thead>
                         <tr>
-                            <th>Grade</th>
+                            <th>Variable</th>
                             <th>Action</th>
                         </tr>
                     </thead>

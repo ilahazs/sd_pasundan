@@ -21,6 +21,7 @@
 @section('content')
 <div class="row">
     @include('master.class.grade.index')
+    @include('master.class.variable.index')
 </div>
 @endsection
 
@@ -35,7 +36,8 @@ $(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
-    var table = $('.dataTables-example').DataTable({
+    // js grade
+    var tableGrade = $('.dataTables-grade').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{{ route('master.grade') }}",
@@ -67,7 +69,7 @@ $(function() {
         })
     })
     
-    $('#saveBtn').click(function(e) {
+    $('#saveGrade').click(function(e) {
         e.preventDefault();
         $(this).html('Saving').attr('disabled', true);
 
@@ -77,15 +79,153 @@ $(function() {
             type: "POST",
             dataType: 'JSON',
             success: function(data) {
-                $('#saveBtn').html('Save Changes').attr('disabled', false);
+                $('#saveGrade').html('Save Changes').attr('disabled', false);
                 $('#gradeForm').trigger("reset");
                 $('#gradeModal').modal('hide');
-                table.draw();
-                console.log(data);
+                tableGrade.draw();
             },
             error: function(data) {
                 console.log('Error:', data);
-                $('#saveBtn').html('Save Changes').attr('disabled', false);
+                $('#saveGrade').html('Save Changes').attr('disabled', false);
+            }
+        })
+    })
+
+    $('body').on('click', '.deleteGrade', function () {
+        var grade_id = $(this).data("id");
+        $(this).hide();
+        Swal.fire({
+            title: 'Delete Grade?',
+            text: "You won't be able to revert this!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#ed5565',
+            cancelButtonColor: '#343a40',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('master.grade') }}" + '/' + grade_id + '/delete',
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.error) {
+                            Swal.fire(
+                                'Error!',
+                                data.error,
+                                'error'
+                            );
+                        }
+                        Swal.fire(
+                            'Deleted!',
+                            data.success,
+                            'success'
+                        );
+                        tableGrade.draw();
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                    }
+                });
+            }
+            else{
+                $(this).show();
+            }
+        })
+    })
+    // js variable
+    var tableVariable = $('.dataTables-variable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('master.variable') }}",
+        columns: [{
+                data: 'variable',
+                name: 'variable'
+            },
+            {
+                data: 'action',
+                name: 'action',
+                className: 'dataTables_empty',
+                orderable: false,
+                searchable: false
+            }
+        ]
+    })
+    $('#createNewVariable').click(function() {
+        $('#variableModal').modal('show');
+        $('#variableForm').trigger("reset");
+    });
+
+    $('body').on('click', '.editVariable', function () {
+        var grade_id = $(this).data("id");
+        $.get("{{ route('master.variable') }}" + '/' + grade_id + '/edit', function (data) {
+            $('#variableForm').trigger("reset");
+            $('#variableModal').modal("show");
+            $('#variable_id').val(data.id);
+            $('#variable_name').val(data.variable);
+        })
+    })
+    
+    $('#saveVariable').click(function(e) {
+        e.preventDefault();
+        $(this).html('Saving').attr('disabled', true);
+
+        $.ajax({
+            data: $('#variableForm').serialize(),
+            url: "{{ route('master.variable.store') }}",
+            type: "POST",
+            dataType: 'JSON',
+            success: function(data) {
+                $('#saveVariable').html('Save Changes').attr('disabled', false);
+                $('#variableForm').trigger("reset");
+                $('#variableModal').modal('hide');
+                tableVariable.draw();
+            },
+            error: function(data) {
+                console.log('Error:', data);
+                $('#saveVariable').html('Save Changes').attr('disabled', false);
+            }
+        })
+    })
+    $('body').on('click', '.deleteVariable', function () {
+        var variable_id = $(this).data("id");
+        $(this).hide();
+        Swal.fire({
+            title: 'Delete Variable?',
+            text: "You won't be able to revert this!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#ed5565',
+            cancelButtonColor: '#343a40',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('master.variable') }}" + '/' + variable_id + '/delete',
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.error) {
+                            Swal.fire(
+                                'Error!',
+                                data.error,
+                                'error'
+                            );
+                        }
+                        Swal.fire(
+                            'Deleted!',
+                            data.success,
+                            'success'
+                        );
+                        tableVariable.draw();
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                    }
+                });
+            }
+            else{
+                $(this).show();
             }
         })
     })

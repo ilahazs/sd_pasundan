@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h5 class="modal-title">Tambah Mata Pelajaran</h5>
+                <h5 class="modal-title">Tambah Grade</h5>
             </div>
             <div class="modal-body">
                 <form id="gradeForm" name="gradeForm" onkeydown="return event.key != 'Enter';">
@@ -25,7 +25,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn" class="btn btn-primary">Save changes</button>
+                <button type="button" id="saveGrade" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
         </div>
         <div class="ibox-content">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover dataTables-example">
+                <table class="table table-striped table-bordered table-hover dataTables-grade">
                     <thead>
                         <tr>
                             <th>Grade</th>

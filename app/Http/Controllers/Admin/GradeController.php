@@ -37,11 +37,22 @@ class GradeController extends BaseController
                 'grade' => $request->grade_name
             ]
             );
-        return response()->json(['success' => 'Course saved successfully.']);
+        return response()->json(['success' => 'Grade saved successfully.']);
     }
     public function edit($id)
     {
         $data = $this->gradeRepository->find($id);
         return response()->json($data);
+    }
+    public function destroy($id)
+    {
+        $data = $this->gradeRepository->find($id);
+        if (!$data) {
+            return response()->json([
+                'error' => 'Data not found.'
+            ]);
+        }
+        $data->delete();
+        return response()->json(['success'=>'Grade deleted successfully.']);
     }
 }

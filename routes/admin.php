@@ -31,6 +31,14 @@ Route::group(['middleware' => 'role:admin'],  function(){
             Route::get('/', 'GradeController@tableGrade')->name('master.grade');
             Route::post('/', 'GradeController@store')->name('master.grade.store');
             Route::get('/{grade}/edit', 'GradeController@edit')->name('master.grade.edit');
+            Route::get('/{grade}/delete', 'GradeController@destroy')->name('master.grade.destroy');
+        });
+        
+        Route::prefix('variable')->group(function(){
+            Route::get('/', 'GradeVariableController@tableVariable')->name('master.variable');
+            Route::post('/', 'GradeVariableController@store')->name('master.variable.store');
+            Route::get('/{variable}/edit', 'GradeVariableController@edit')->name('master.variable.edit');
+            Route::get('/{variable}/delete', 'GradeVariableController@destroy')->name('master.variable.destroy');
         });
     });
     
