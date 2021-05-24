@@ -5,14 +5,14 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h5 class="modal-title">Tambah Grade</h5>
+                <h5 class="modal-title">Tambah Tingkatan</h5>
             </div>
             <div class="modal-body">
                 <form id="gradeForm" name="gradeForm" onkeydown="return event.key != 'Enter';">
                     @csrf
                     <input type="hidden" name="grade_id" id="grade_id">
                     <div class="form-group">
-                        <label for="Grade" class="col-form-label">Grade</label>
+                        <label for="Grade" class="col-form-label">Tingkatan</label>
                         <input value="{{old('grade_name')}}" required type="text" name="grade_name" id="grade_name"
                             class="form-control">
                         @error('grade_name')
@@ -35,7 +35,7 @@
 <div class="col-lg-12">
     <div class="ibox">
         <div class="ibox-title">
-            <h5>Grade</h5>
+            <h5>Tingkatan Kelas</h5>
             <div class="ibox-tools mt-1">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -45,7 +45,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="javascript:void(0)" id="createNewGrade" class="dropdown-item">Tambah Grade</a>
+                        <a href="javascript:void(0)" id="createNewGrade" class="dropdown-item">Tambah Tingkatan</a>
                     </li>
                 </ul>
             </div>

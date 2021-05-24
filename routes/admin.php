@@ -40,6 +40,13 @@ Route::group(['middleware' => 'role:admin'],  function(){
             Route::get('/{variable}/edit', 'GradeVariableController@edit')->name('master.variable.edit');
             Route::get('/{variable}/delete', 'GradeVariableController@destroy')->name('master.variable.destroy');
         });
+
+        Route::prefix('school-year')->group(function(){
+            Route::get('/', 'SchoolYearController@tableYear')->name('master.school-year');
+            Route::post('/', 'SchoolYearController@store')->name('master.school-year.store');
+            Route::get('/{schoolyear}/edit', 'SchoolYearController@edit')->name('master.school-year.edit');
+            Route::get('/{schoolyear}/delete', 'SchoolYearController@destroy')->name('master.school-year.destroy');
+        });
     });
     
 });

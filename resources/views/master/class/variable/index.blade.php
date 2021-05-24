@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h5 class="modal-title">Tambah Variable</h5>
+                <h5 class="modal-title">Tambah Variabel</h5>
             </div>
             <div class="modal-body">
                 <form id="variableForm" name="variableForm" onkeydown="return event.key != 'Enter';">
@@ -35,7 +35,7 @@
 <div class="col-lg-12">
     <div class="ibox">
         <div class="ibox-title">
-            <h5>Variable</h5>
+            <h5>Variabel Kelas</h5>
             <div class="ibox-tools mt-1">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -45,7 +45,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="javascript:void(0)" id="createNewVariable" class="dropdown-item">Tambah Variable</a>
+                        <a href="javascript:void(0)" id="createNewVariable" class="dropdown-item">Tambah Variabel</a>
                     </li>
                 </ul>
             </div>
@@ -55,7 +55,7 @@
                 <table class="table table-striped table-bordered table-hover dataTables-variable">
                     <thead>
                         <tr>
-                            <th>Variable</th>
+                            <th>Variabel Kelas</th>
                             <th>Action</th>
                         </tr>
                     </thead>

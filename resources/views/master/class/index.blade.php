@@ -4,6 +4,8 @@
 @section('head')
 <link href="{{asset('css/plugins/dataTables/datatables.min.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
+<link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
+
 @endsection
 
 @section('heading')
@@ -22,12 +24,14 @@
 <div class="row">
     @include('master.class.grade.index')
     @include('master.class.variable.index')
+    @include('master.class.school-year.index')
 </div>
 @endsection
 
 @section('scripts')
 <script src="{{asset('js/plugins/dataTables/datatables.min.js')}}"></script>
 <script src="{{asset('js/plugins/dataTables/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.4/dist/sweetalert2.all.min.js"></script>
 <script>
 $(function() {
@@ -59,16 +63,16 @@ $(function() {
         $('#gradeForm').trigger("reset");
     });
 
-    $('body').on('click', '.editGrade', function () {
+    $('body').on('click', '.editGrade', function() {
         var grade_id = $(this).data("id");
-        $.get("{{ route('master.grade') }}" + '/' + grade_id + '/edit', function (data) {
+        $.get("{{ route('master.grade') }}" + '/' + grade_id + '/edit', function(data) {
             $('#gradeForm').trigger("reset");
             $('#gradeModal').modal("show");
             $('#grade_id').val(data.id);
             $('#grade_name').val(data.grade);
         })
     })
-    
+
     $('#saveGrade').click(function(e) {
         e.preventDefault();
         $(this).html('Saving').attr('disabled', true);
@@ -91,12 +95,12 @@ $(function() {
         })
     })
 
-    $('body').on('click', '.deleteGrade', function () {
+    $('body').on('click', '.deleteGrade', function() {
         var grade_id = $(this).data("id");
         $(this).hide();
         Swal.fire({
-            title: 'Delete Grade?',
-            text: "You won't be able to revert this!",
+            title: 'Hapus tingkatan kelas?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#ed5565',
@@ -115,24 +119,27 @@ $(function() {
                                 data.error,
                                 'error'
                             );
+                            $(this).show();
+                        } else {
+                            Swal.fire(
+                                'Deleted!',
+                                data.success,
+                                'success'
+                            );
                         }
-                        Swal.fire(
-                            'Deleted!',
-                            data.success,
-                            'success'
-                        );
                         tableGrade.draw();
                     },
                     error: function(data) {
                         console.log('Error:', data);
+                        $(this).show();
                     }
                 });
-            }
-            else{
+            } else {
                 $(this).show();
             }
         })
     })
+
     // js variable
     var tableVariable = $('.dataTables-variable').DataTable({
         processing: true,
@@ -156,16 +163,16 @@ $(function() {
         $('#variableForm').trigger("reset");
     });
 
-    $('body').on('click', '.editVariable', function () {
+    $('body').on('click', '.editVariable', function() {
         var grade_id = $(this).data("id");
-        $.get("{{ route('master.variable') }}" + '/' + grade_id + '/edit', function (data) {
+        $.get("{{ route('master.variable') }}" + '/' + grade_id + '/edit', function(data) {
             $('#variableForm').trigger("reset");
             $('#variableModal').modal("show");
             $('#variable_id').val(data.id);
             $('#variable_name').val(data.variable);
         })
     })
-    
+
     $('#saveVariable').click(function(e) {
         e.preventDefault();
         $(this).html('Saving').attr('disabled', true);
@@ -187,12 +194,12 @@ $(function() {
             }
         })
     })
-    $('body').on('click', '.deleteVariable', function () {
+    $('body').on('click', '.deleteVariable', function() {
         var variable_id = $(this).data("id");
         $(this).hide();
         Swal.fire({
-            title: 'Delete Variable?',
-            text: "You won't be able to revert this!",
+            title: 'Hapus variabel kelas?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#ed5565',
@@ -202,7 +209,8 @@ $(function() {
             if (result.value == true) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('master.variable') }}" + '/' + variable_id + '/delete',
+                    url: "{{ route('master.variable') }}" + '/' + variable_id +
+                        '/delete',
                     success: function(data) {
                         // console.log(data);
                         if (data.error) {
@@ -211,20 +219,142 @@ $(function() {
                                 data.error,
                                 'error'
                             );
+                            $(this).show();
+                        } else {
+                            Swal.fire(
+                                'Deleted!',
+                                data.success,
+                                'success'
+                            );
                         }
-                        Swal.fire(
-                            'Deleted!',
-                            data.success,
-                            'success'
-                        );
                         tableVariable.draw();
                     },
                     error: function(data) {
                         console.log('Error:', data);
+                        $(this).show();
                     }
                 });
+            } else {
+                $(this).show();
             }
-            else{
+        })
+    })
+
+    // js school year
+    var tableYear = $('.dataTables-year').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('master.school-year') }}",
+        columns: [{
+                data: 'year',
+                name: 'year'
+            },
+            {
+                data: 'is_active',
+                name: 'is_active',
+                className: 'dataTables_empty',
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: 'action',
+                name: 'action',
+                className: 'dataTables_empty',
+                orderable: false,
+                searchable: false
+            }
+        ]
+    })
+    $('#createNewYear').click(function() {
+        $('#data_5 .input-daterange').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true,
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years"
+        });
+        $('#yearModal').modal('show');
+        $('#yearForm').trigger("reset");
+    });
+
+    $('body').on('click', '.editYear', function() {
+        var year_id = $(this).data("id");
+        $.get("{{ route('master.school-year') }}" + '/' + year_id + '/edit', function(data) {
+            $('#yearForm').trigger("reset");
+            $('#yearModal').modal("show");
+            $('#year_id').val(data.id);
+            $('#start_year').val(data.start_year);
+            $('#end_year').val(data.end_year);
+            $('#isActive').attr('checked', false);
+            if (data.isActive == "1") {
+                $('#isActive').attr('checked', true);
+            }
+        })
+    })
+
+    $('#saveYear').click(function(e) {
+        e.preventDefault();
+        $(this).html('Saving').attr('disabled', true);
+
+        $.ajax({
+            data: $('#yearForm').serialize(),
+            url: "{{ route('master.school-year.store') }}",
+            type: "POST",
+            dataType: 'JSON',
+            success: function(data) {
+                $('#saveYear').html('Save Changes').attr('disabled', false);
+                $('#yearForm').trigger("reset");
+                $('#yearModal').modal('hide');
+                tableYear.draw();
+            },
+            error: function(data) {
+                console.log('Error:', data);
+                $('#saveYear').html('Save Changes').attr('disabled', false);
+            }
+        })
+    })
+    $('body').on('click', '.deleteYear', function() {
+        var year_id = $(this).data("id");
+        $(this).hide();
+        Swal.fire({
+            title: 'Hapus tahun ajaran?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#ed5565',
+            cancelButtonColor: '#343a40',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('master.school-year') }}" + '/' + year_id +
+                        '/delete',
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.error) {
+                            Swal.fire(
+                                'Error!',
+                                data.error,
+                                'error'
+                            );
+                            $(this).show();
+                        } else {
+                            Swal.fire(
+                                'Deleted!',
+                                data.success,
+                                'success'
+                            );
+                        }
+                        tableYear.draw();
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        $(this).show();
+                    }
+                });
+            } else {
                 $(this).show();
             }
         })
