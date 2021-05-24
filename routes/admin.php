@@ -14,12 +14,39 @@ Route::group(['middleware' => 'role:admin'],  function(){
         Route::get('{teacher}/delete', 'TeacherController@destroy');
     });
     Route::prefix('master')->group(function(){
-        Route::get('home', 'HomeController@index')->name('master.home');
-        Route::post('home', 'HomeController@store');
-        Route::get('home/create', 'HomeController@create')->name('master.home.create');
-        Route::get('home/{home}/delete', 'HomeController@destroy');
-        Route::get('home/{home}/edit', 'HomeController@edit');
-        Route::post('home/{home}/update', 'HomeController@update');
+        Route::prefix('home')->group(function(){
+            Route::get('/', 'HomeController@index')->name('master.home');
+            Route::post('/', 'HomeController@store');
+            Route::get('/create', 'HomeController@create')->name('master.home.create');
+            Route::get('/{home}/delete', 'HomeController@destroy');
+            Route::get('/{home}/edit', 'HomeController@edit');
+            Route::post('/{home}/update', 'HomeController@update');
+        });
+
+        Route::prefix('class')->group(function(){
+            Route::get('/', 'MasterClassController@index')->name('master.class');
+        });
+
+        Route::prefix('grade')->group(function(){
+            Route::get('/', 'GradeController@tableGrade')->name('master.grade');
+            Route::post('/', 'GradeController@store')->name('master.grade.store');
+            Route::get('/{grade}/edit', 'GradeController@edit')->name('master.grade.edit');
+            Route::get('/{grade}/delete', 'GradeController@destroy')->name('master.grade.destroy');
+        });
+        
+        Route::prefix('variable')->group(function(){
+            Route::get('/', 'GradeVariableController@tableVariable')->name('master.variable');
+            Route::post('/', 'GradeVariableController@store')->name('master.variable.store');
+            Route::get('/{variable}/edit', 'GradeVariableController@edit')->name('master.variable.edit');
+            Route::get('/{variable}/delete', 'GradeVariableController@destroy')->name('master.variable.destroy');
+        });
+
+        Route::prefix('school-year')->group(function(){
+            Route::get('/', 'SchoolYearController@tableYear')->name('master.school-year');
+            Route::post('/', 'SchoolYearController@store')->name('master.school-year.store');
+            Route::get('/{schoolyear}/edit', 'SchoolYearController@edit')->name('master.school-year.edit');
+            Route::get('/{schoolyear}/delete', 'SchoolYearController@destroy')->name('master.school-year.destroy');
+        });
     });
     
 });

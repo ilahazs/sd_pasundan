@@ -10,7 +10,7 @@ use App\User;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
 
-class StudentController extends Controller
+class StudentController extends BaseController
 {
     /**
      * Display a listing of the resource.

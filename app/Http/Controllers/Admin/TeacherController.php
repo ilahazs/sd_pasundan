@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use App\User;
 
-class TeacherController extends Controller
+class TeacherController extends BaseController
 {
     /**
      * Display a listing of the resource.

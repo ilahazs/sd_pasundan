@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Home;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     /**
      * Display a listing of the resource.
