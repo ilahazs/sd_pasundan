@@ -7,6 +7,14 @@ Route::prefix('dashboard')->group(function(){
 });
 
 Route::group(['middleware' => 'role:admin'],  function(){
+    Route::prefix('classroom')->group(function ()
+    {
+        Route::get('/', 'ClassroomController@index')->name('classroom');
+        Route::post('/', 'ClassroomController@store')->name('classroom.store');
+        Route::get('/{classroom}/edit', 'ClassroomController@edit')->name('classroom.edit');
+        Route::get('/{classroom}/delete', 'ClassroomController@destroy')->name('classroom.destroy');
+    });
+    
     Route::prefix('teacher')->group(function (){
         Route::get('/', 'TeacherController@index')->name('teacher');
         Route::get('create', 'TeacherController@create');
