@@ -55,6 +55,9 @@
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
                 </a>
+                <a id="refreshTableYear" data-toggle="tooltip" data-placement="top" title="View">
+                    <i class="fa fa-refresh"></i>
+                </a>
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-plus"></i>
                 </a>
