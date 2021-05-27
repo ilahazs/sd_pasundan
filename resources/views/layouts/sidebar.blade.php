@@ -25,15 +25,21 @@
                     class="nav-label">Mata Pelajaran</span></a>
         </li>
         <li class="{{ Request::segment(2) === 'student'  ? 'active' : null }}">
-            <a href="{{ route('student') }}"><i class="fa fa-address-book-o"></i><span
+            <a href="{{ route('student') }}"><i class="fa fa-address-book"></i><span
                     class="nav-label">Siswa</span></a>
         </li>
         @endif
         @if(auth()->user()->role == 'admin')
         <li class="{{ Request::segment(2) === 'teacher'  ? 'active' : null }}">
-            <a href="{{ route('teacher') }}"><i class="fa fa-address-card-o"></i><span
+            <a href="{{ route('teacher') }}"><i class="fa fa-address-card"></i><span
                     class="nav-label">Guru</span></a>
         </li>
+        
+        <li class="{{ Request::segment(2) === 'classroom'  ? 'active' : null }}">
+            <a href="{{ route('classroom') }}"><i class="fa fa-university"></i><span
+                    class="nav-label">Kelas</span></a>
+        </li>
+
         <li class="{{ Request::segment(2) === 'master' ? 'active' : null }}">
             <a href="#"><i class="fa fa-cogs"></i><span class="nav-label">Master Data</span><span
                     class="fa arrow"></span></a>
