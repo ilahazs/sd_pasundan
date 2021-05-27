@@ -58,6 +58,11 @@ $(function() {
             }
         ]
     })
+
+    $('#refreshTableGrade').click(function () {
+        tableGrade.draw();
+    })
+    
     $('#createNewGrade').click(function() {
         $('#gradeModal').modal('show');
         $('#gradeForm').trigger("reset");
@@ -158,6 +163,11 @@ $(function() {
             }
         ]
     })
+
+    $('#refreshTableVariable').click(function () {
+        tableVariable.draw();
+    })
+    
     $('#createNewVariable').click(function() {
         $('#variableModal').modal('show');
         $('#variableForm').trigger("reset");
@@ -265,6 +275,11 @@ $(function() {
             }
         ]
     })
+
+    $('#refreshTableYear').click(function () {
+        tableYear.draw();
+    })
+    
     $('#createNewYear').click(function() {
         $('#data_5 .input-daterange').datepicker({
             keyboardNavigation: false,

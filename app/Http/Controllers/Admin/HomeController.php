@@ -58,7 +58,7 @@ class HomeController extends BaseController
             $home->content = $input['content'];
         }
         $home->save();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     /**
@@ -106,7 +106,7 @@ class HomeController extends BaseController
             $home->content = $input['content'];
         }
         $home->save();
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     /**
