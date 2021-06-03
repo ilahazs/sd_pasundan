@@ -17,6 +17,7 @@ Route::group(['middleware' => 'role:admin'],  function(){
     
     Route::prefix('teacher')->group(function (){
         Route::get('/', 'TeacherController@index')->name('teacher');
+        Route::get('/tableTeacher', 'TeacherController@tableTeacher')->name('teacher.table');
         Route::get('create', 'TeacherController@create');
         Route::post('/', 'TeacherController@store');        
         Route::get('{teacher}/delete', 'TeacherController@destroy');
