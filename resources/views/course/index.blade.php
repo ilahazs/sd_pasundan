@@ -7,13 +7,13 @@
 @endsection
 
 @section('heading')
-<h2>Mata Pelajaran</h2>
+<h2>Master Mata Pelajaran</h2>
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
         <a href="{{url('/')}}">Home</a>
     </li>
     <li class="breadcrumb-item">
-        <strong>Table Mata Pelajaran</strong>
+        <strong>Master Mata Pelajaran</strong>
     </li>
 </ol>
 @endsection

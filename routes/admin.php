@@ -51,7 +51,8 @@ Route::group(['middleware' => 'role:admin'],  function(){
         });
 
         Route::prefix('school-year')->group(function(){
-            Route::get('/', 'SchoolYearController@tableYear')->name('master.school-year');
+            Route::get('/', 'SchoolYearController@index')->name('master.school-year');
+            Route::get('/tableYear', 'SchoolYearController@tableYear')->name('master.school-year.table');
             Route::post('/', 'SchoolYearController@store')->name('master.school-year.store');
             Route::get('/{schoolyear}/edit', 'SchoolYearController@edit')->name('master.school-year.edit');
             Route::get('/{schoolyear}/delete', 'SchoolYearController@destroy')->name('master.school-year.destroy');
