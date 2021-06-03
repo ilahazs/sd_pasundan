@@ -51,14 +51,14 @@ class HomeController extends BaseController
             $image = $request->file('content');
             $nama_file = time()."_".$image->getClientOriginalName();
             $tujuan_upload = 'landing-page/image';
-            $image->move($tujuan_upload,$nama_file);
+            Storage::put($tujuan_upload, $fileContents);
             $home->content = $nama_file;
         }
         else{
             $home->content = $input['content'];
         }
         $home->save();
-        return redirect()->back();
+        return redirect()->route('master.home');
     }
 
     /**
