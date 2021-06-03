@@ -100,28 +100,50 @@ $(document).ready(function() {
             }
         ]
     })
-    $('#refreshTableTeacher').click(function () {
+    $('#refreshTableTeacher').click(function() {
         tableTeacher.draw();
     })
-    $(document).on('click', '.delete-btn', function(e) {
-        e.preventDefault();
-        const url = $(this).attr('href');
+    $(document).on('click', '.deleteTeacher', function(e) {
+        var teacher_id = $(this).data("id");
+        $(this).hide();
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
+            title: 'Hapus guru?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#ed5565',
             cancelButtonColor: '#343a40',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                );
-                window.location.href = url;
+            if (result.value == true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('teacher') }}" + '/' + teacher_id + '/delete',
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.error) {
+                            Swal.fire(
+                                'Error!',
+                                data.error,
+                                'error'
+                            );
+                            $(this).show();
+                        } else {
+                            Swal.fire(
+                                'Deleted!',
+                                data.success,
+                                'success'
+                            );
+                        }
+                        tableTeacher.draw();
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        $(this).show();
+                    }
+                });
+            } else {
+                $(this).show();
             }
         })
     });

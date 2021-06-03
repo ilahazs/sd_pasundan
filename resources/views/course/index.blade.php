@@ -24,10 +24,18 @@
         <div class="ibox">
             <div class="ibox-title">
                 <h5>Table Mata Pelajaran</h5>
-                <div class="ibox-tools mb-10">
-                    <a href="javascript:void(0)" id="createNewCourse" class="mr-4 btn btn-primary btn-sm">
-                        + Mata Pelajaran
+                <div class="ibox-tools mt-1">
+                    <a id="refreshTableCourse" data-toggle="tooltip" data-placement="top" title="View">
+                        <i class="fa fa-refresh"></i>
                     </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="javascript:void(0)" class="dropdown-item">Tambah Guru</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="ibox-content">
@@ -60,8 +68,8 @@
                                     <input type="hidden" name="course_id" id="course_id">
                                     <div class="form-group course_code_group">
                                         <label for="Code" class="col-form-label">Kode Pelajaran</label>
-                                        <input value="{{old('course_code')}}" required type="text" name="course_code" id="course_code"
-                                            class="form-control">
+                                        <input value="{{old('course_code')}}" required type="text" name="course_code"
+                                            id="course_code" class="form-control">
                                         @error('course_code')
                                         <li class="text-danger">
                                             <strong>{{ $message }}</strong>
@@ -70,8 +78,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="Name" class="col-form-label">Nama Pelajaran</label>
-                                        <input value="{{old('name')}}" required type="text" name="course_name" id="course_name"
-                                            class="form-control">
+                                        <input value="{{old('name')}}" required type="text" name="course_name"
+                                            id="course_name" class="form-control">
                                         @error('course_name')
                                         <li class="text-danger">
                                             <strong>{{ $message }}</strong>
@@ -130,10 +138,12 @@ $(function() {
         $('#courseModal').modal('show');
         $('#courseForm').trigger("reset");
     });
-
-    $('body').on('click', '.editCourse', function () {
+    $('#refreshTableCourse').click(function() {
+        table.draw();
+    })
+    $('body').on('click', '.editCourse', function() {
         var course_id = $(this).data("id");
-        $.get("{{ route('course') }}" + '/' + course_id + '/edit', function (data) {
+        $.get("{{ route('course') }}" + '/' + course_id + '/edit', function(data) {
             $('#courseForm').trigger("reset");
             $('.course_code_group').show(true);
             $('#courseModal').modal("show");
@@ -143,7 +153,7 @@ $(function() {
             console.log(data);
         })
     })
-    
+
     $('#saveBtn').click(function(e) {
         e.preventDefault();
         $(this).html('Saving').attr('disabled', true);
@@ -167,7 +177,7 @@ $(function() {
         })
     })
 
-    $('body').on('click', '.deleteCourse', function () {
+    $('body').on('click', '.deleteCourse', function() {
         var course_id = $(this).data("id");
         Swal.fire({
             title: 'Hapus mata pelajaran?',

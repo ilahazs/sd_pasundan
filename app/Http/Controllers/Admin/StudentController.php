@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Hash;
 
 class StudentController extends BaseController
 {
+    public function __construct(Student $student)
+    {
+        $this->studentRepository = $student;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,15 +23,25 @@ class StudentController extends BaseController
      */
     public function index()
     {
-        $data['student'] = Student::all();
+        $data['student'] = $this->studentRepository->all();
         return view('student.index', $data);
     }
 
-    public function tableSiswa(Request $request)
+    public function tableStudent(Request $request)
     {
-        $data = Student::select('*');
-        return $data;
-        return DataTables::eloquent($data)->toJson();
+        if($request->ajax()){
+            $data = $this->studentRepository->select('*')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row)
+                {
+                    $btn = '<a href="student/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning editStudent">Update</a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteStudent">Delete</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     /**
@@ -98,7 +112,7 @@ class StudentController extends BaseController
      */
     public function edit($id)
     {
-        $data['siswa'] = Student::find($id);
+        $data['siswa'] = $this->studentRepository->find($id);
         $data['siswa']->phone = ltrim($data['siswa']->phone, '+62');
         $data['user'] = User::find($data['siswa']->user_id);
 
@@ -126,7 +140,7 @@ class StudentController extends BaseController
         $input = $request->all();
         
         //insert to user
-        $student = Student::find($id);
+        $student = $this->studentRepository->find($id);
         $student->name = $input['name'];
         $student->nis = $input['nis'];
         $student->nisn = $input['nisn'];
@@ -157,7 +171,7 @@ class StudentController extends BaseController
      */
     public function destroy($id)
     {
-        $siswa = Student::find($id);
+        $siswa = $this->studentRepository->find($id);
         if($siswa){
             $user = User::find($siswa->user_id);
             $siswa->delete();
@@ -166,8 +180,10 @@ class StudentController extends BaseController
             }
         }
         else {
-            return redirect('admin/student');
+            return response()->json([
+                'error' => 'Data not found.'
+            ]);
         }
-        return redirect('admin/student');
+        return response()->json(['success'=>'Grade deleted successfully.']);
     }
 }

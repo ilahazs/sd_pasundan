@@ -29,8 +29,8 @@ class TeacherController extends BaseController
                 ->addIndexColumn()
                 ->addColumn('action', function ($row)
                 {
-                    $btn = '<a href="teacher/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning editGrade">Update</a>';
-                    $btn = $btn.' <a href="teacher/'.$row->id.'/delete" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteGrade">Delete</a>';
+                    $btn = '<a href="teacher/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning editTeacher">Update</a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteTeacher">Delete</a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -197,8 +197,10 @@ class TeacherController extends BaseController
             }
         }
         else {
-            return redirect('admin/teacher');
+            return response()->json([
+                'error' => 'Data not found.'
+            ]);
         }
-        return redirect('admin/teacher');
+        return response()->json(['success'=>'Grade deleted successfully.']);
     }
 }
