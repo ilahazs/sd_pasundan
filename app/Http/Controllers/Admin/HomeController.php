@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use URL;
 use App\Models\Home;
 
 class HomeController extends BaseController
@@ -95,11 +95,12 @@ class HomeController extends BaseController
     {
         $input = $request->all();
         $home = Home::find($id);
+        $url = URL::to('/');
         if($home['type'] == 'image'){
             $image = $request->file('content');
             $nama_file = time()."_".$image->getClientOriginalName();
-            $tujuan_upload = 'landing-page/image';
-            Storage::put($tujuan_upload, $image);
+            $tujuan_upload = $url.'/'.'landing-page/image';
+            $image->move($tujuan_upload, $image);
             $home->content = $nama_file;
         }
         else{
