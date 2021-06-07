@@ -53,7 +53,7 @@
                         </li>
                         @if(auth()->check())
                             <li>
-                                <a href="{{route('login')}}" class="nav-link">{{auth()->user()->name}}</a>
+                                <a href="{{route('dashboard')}}" class="nav-link">Admin Page</a>
                             </li>
                             <li>
                                 <a href="{{route('logout')}}" class="nav-link page-scroll">Logout</a>

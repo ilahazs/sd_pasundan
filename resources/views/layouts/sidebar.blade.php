@@ -39,10 +39,10 @@
         <li class="{{ Request::segment(2) === 'master' ? 'active' : null }}">
             <a href="#"><i class="fa fa-cogs"></i><span class="nav-label">Master Data</span><span
                     class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
+            <!-- <ul class="nav nav-second-level">
                 <li class="{{ Request::segment(3) === 'home' ? 'active' : null }}"><a
                         href="{{ route('master.home') }}">Home</a></li>
-            </ul>
+            </ul> -->
             <ul class="nav nav-second-level">
                 <li class="{{ Request::segment(3) === 'class' ? 'active' : null }}"><a
                         href="{{ route('master.class') }}">Kelas</a></li>

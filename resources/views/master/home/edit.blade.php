@@ -79,7 +79,7 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <div class="col-sm-4 col-sm-offset-2">
-                            <a href="{{route('dashboard')}}" class="btn btn-white btn-sm">Cancel</a>
+                            <a href="{{route('master.home')}}" class="btn btn-white btn-sm">Cancel</a>
                             <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
                         </div>
                     </div>
