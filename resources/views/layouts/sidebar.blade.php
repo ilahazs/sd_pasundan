@@ -52,8 +52,12 @@
                         href="{{ route('master.school-year') }}">Tahun Ajaran</a></li>
             </ul>
             <ul class="nav nav-second-level">
-                <li class="{{ Request::segment(3) === 'subjects' ? 'active' : null }}"><a
+                <li class="{{ Request::segment(3) === 'course' ? 'active' : null }}"><a
                         href="{{ route('course') }}">Mata Pelajaran</a></li>
+            </ul>
+            <ul class="nav nav-second-level">
+                <li class="{{ Request::segment(3) === 'course-teacher' ? 'active' : null }}"><a
+                        href="{{ route('course-teacher') }}">Guru Mata Pelajaran</a></li>
             </ul>
         </li>
         @endif

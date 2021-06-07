@@ -33,7 +33,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a href="javascript:void(0)" class="dropdown-item">Tambah Guru</a>
+                            <a href="javascript:void(0)" id="createNewCourse" class="dropdown-item">Tambah Mata Pelajaran</a>
                         </li>
                     </ul>
                 </div>
