@@ -20,10 +20,6 @@
                     class="nav-label">Dashboard</span></a>
         </li>
         @if(in_array(auth()->user()->role, ['admin', 'teacher']))
-        <li class="{{ Request::segment(2) === 'subjects'  ? 'active' : null }}">
-            <a href="{{ route('course') }}"><i class="fa fa-book"></i><span
-                    class="nav-label">Mata Pelajaran</span></a>
-        </li>
         <li class="{{ Request::segment(2) === 'student'  ? 'active' : null }}">
             <a href="{{ route('student') }}"><i class="fa fa-address-book"></i><span
                     class="nav-label">Siswa</span></a>
@@ -50,6 +46,18 @@
             <ul class="nav nav-second-level">
                 <li class="{{ Request::segment(3) === 'class' ? 'active' : null }}"><a
                         href="{{ route('master.class') }}">Kelas</a></li>
+            </ul>
+            <ul class="nav nav-second-level">
+                <li class="{{ Request::segment(3) === 'school-year' ? 'active' : null }}"><a
+                        href="{{ route('master.school-year') }}">Tahun Ajaran</a></li>
+            </ul>
+            <ul class="nav nav-second-level">
+                <li class="{{ Request::segment(3) === 'course' ? 'active' : null }}"><a
+                        href="{{ route('course') }}">Mata Pelajaran</a></li>
+            </ul>
+            <ul class="nav nav-second-level">
+                <li class="{{ Request::segment(3) === 'course-teacher' ? 'active' : null }}"><a
+                        href="{{ route('course-teacher') }}">Guru Mata Pelajaran</a></li>
             </ul>
         </li>
         @endif

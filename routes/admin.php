@@ -17,6 +17,7 @@ Route::group(['middleware' => 'role:admin'],  function(){
     
     Route::prefix('teacher')->group(function (){
         Route::get('/', 'TeacherController@index')->name('teacher');
+        Route::get('/tableTeacher', 'TeacherController@tableTeacher')->name('teacher.table');
         Route::get('create', 'TeacherController@create');
         Route::post('/', 'TeacherController@store');        
         Route::get('{teacher}/delete', 'TeacherController@destroy');
@@ -34,7 +35,7 @@ Route::group(['middleware' => 'role:admin'],  function(){
         Route::prefix('class')->group(function(){
             Route::get('/', 'MasterClassController@index')->name('master.class');
         });
-
+        
         Route::prefix('grade')->group(function(){
             Route::get('/', 'GradeController@tableGrade')->name('master.grade');
             Route::post('/', 'GradeController@store')->name('master.grade.store');
@@ -48,13 +49,30 @@ Route::group(['middleware' => 'role:admin'],  function(){
             Route::get('/{variable}/edit', 'GradeVariableController@edit')->name('master.variable.edit');
             Route::get('/{variable}/delete', 'GradeVariableController@destroy')->name('master.variable.destroy');
         });
-
+        
         Route::prefix('school-year')->group(function(){
-            Route::get('/', 'SchoolYearController@tableYear')->name('master.school-year');
+            Route::get('/', 'SchoolYearController@index')->name('master.school-year');
+            Route::get('/tableYear', 'SchoolYearController@tableYear')->name('master.school-year.table');
             Route::post('/', 'SchoolYearController@store')->name('master.school-year.store');
             Route::get('/{schoolyear}/edit', 'SchoolYearController@edit')->name('master.school-year.edit');
             Route::get('/{schoolyear}/delete', 'SchoolYearController@destroy')->name('master.school-year.destroy');
         });
+
+        Route::prefix('course')->group(function(){
+            Route::get('/', 'CourseController@index')->name('course');
+            Route::post('/', 'CourseController@store')->name('course.store');
+            Route::get('/{course}/edit', 'CourseController@edit')->name('course.edit');
+            Route::get('/{course}/delete', 'CourseController@destroy')->name('course.destroy');
+        });
+        
+        Route::prefix('course-teacher')->group(function(){
+            Route::get('/', 'CourseTeacherController@index')->name('course-teacher');
+            Route::post('/', 'CourseTeacherController@store')->name('course-teacher.store');
+            Route::get('/table', 'CourseTeacherController@tableCourseTeacher')->name('course-teacher.table');
+            Route::get('/{courseteacher}/edit', 'CourseTeacherController@edit')->name('course-teacher.edit');
+            Route::get('/{courseteacher}/delete', 'CourseTeacherController@destroy')->name('course-teacher.destroy');
+        });
+        
     });
     
 });
@@ -66,14 +84,9 @@ Route::group(['middleware' => 'role:admin,teacher'],  function(){
         Route::get('{student}/edit', 'StudentController@edit');
         Route::post('{student}', 'StudentController@update');
         Route::get('{student}/delete', 'StudentController@destroy');
-        Route::post('tablestudent', 'StudentController@table')->name('tablestudent');
+        Route::get('tablestudent', 'StudentController@tableStudent')->name('student.table');
     });
-    Route::prefix('course')->group(function(){
-        Route::get('/', 'CourseController@index')->name('course');
-        Route::post('/', 'CourseController@store')->name('course.store');
-        Route::get('/{course}/edit', 'CourseController@edit')->name('course.edit');
-        Route::get('/{course}/delete', 'CourseController@destroy')->name('course.destroy');
-    });
+    
     Route::prefix('teacher')->group(function (){
         Route::get('{teacher}/edit', 'TeacherController@edit');
         Route::post('{teacher}', 'TeacherController@update');

@@ -12,6 +12,12 @@ class SchoolYearController extends BaseController
     {
         $this->yearRepository = $year;
     }
+
+    public function index()
+    {
+        return view('master.school-year.index');
+    }
+    
     public function tableYear(Request $request)
     {
         if ($request->ajax()) {

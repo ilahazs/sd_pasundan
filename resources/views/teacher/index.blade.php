@@ -27,15 +27,23 @@
         <div class="ibox">
             <div class="ibox-title">
                 <h5>Table Guru</h5>
-                <div class="ibox-tools mb-10">
-                    <a href="{{url('admin/teacher/create')}}" class="mr-4 btn btn-primary btn-sm">
-                        Add Guru
+                <div class="ibox-tools mt-1">
+                    <a id="refreshTableTeacher" data-toggle="tooltip" data-placement="top" title="View">
+                        <i class="fa fa-refresh"></i>
                     </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="{{url('admin/teacher/create')}}" class="dropdown-item">Tambah Guru</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
-                    <table class="table table-striped dataTables">
+                    <table class="table table-striped table-bordered table-hover dataTables-teacher">
                         <thead>
                             <tr>
                                 <th class="dataTables_empty">Nama</th>
@@ -45,26 +53,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($teacher as $row)
-                            <tr>
-                                <td>{{$row->name}}</td>
-                                <td>{{$row->nip}}</td>
-                                <td>{{$row->phone}}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <!-- <a href="teacher/{{$row->id}}/show" class="btn-dark btn btn-sm mr-2"
-                                            data-toggle="tooltip" data-placement="top" title="View"><i
-                                                class="fa fa-eye"></i></a> -->
-                                        <a href="teacher/{{$row->id}}/edit" class="btn-warning btn btn-sm mr-2"
-                                            data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                                class="fa fa-edit"></i></a>
-                                        <a href="teacher/{{$row->id}}/delete"
-                                            class="edit btn btn-danger btn-sm delete-btn mr-2" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -80,29 +69,84 @@
 <script src="{{asset('js/plugins/select2/select2.full.min.js')}}"></script>
 <script>
 $(document).ready(function() {
-    $(document).on('click', '.delete-btn', function(e) {
-        e.preventDefault();
-        const url = $(this).attr('href');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+    // js grade
+    var tableTeacher = $('.dataTables-teacher').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('teacher.table') }}",
+        columns: [{
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'nip',
+                name: 'nip'
+            },
+            {
+                data: 'phone',
+                name: 'phone'
+            },
+            {
+                data: 'action',
+                name: 'action',
+                className: 'dataTables_empty',
+                orderable: false,
+                searchable: false
+            }
+        ]
+    })
+    $('#refreshTableTeacher').click(function() {
+        tableTeacher.draw();
+    })
+    $(document).on('click', '.deleteTeacher', function(e) {
+        var teacher_id = $(this).data("id");
+        $(this).hide();
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
+            title: 'Hapus guru?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#ed5565',
             cancelButtonColor: '#343a40',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                );
-                window.location.href = url;
+            if (result.value == true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('teacher') }}" + '/' + teacher_id + '/delete',
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.error) {
+                            Swal.fire(
+                                'Error!',
+                                data.error,
+                                'error'
+                            );
+                            $(this).show();
+                        } else {
+                            Swal.fire(
+                                'Deleted!',
+                                data.success,
+                                'success'
+                            );
+                        }
+                        tableTeacher.draw();
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        $(this).show();
+                    }
+                });
+            } else {
+                $(this).show();
             }
         })
     });
-    var table = $('.dataTables').DataTable();
 })
 </script>
 @endsection

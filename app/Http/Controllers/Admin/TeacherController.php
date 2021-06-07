@@ -8,18 +8,34 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Teacher;
 use App\User;
+use DataTables;
 
 class TeacherController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct(Teacher $teacher)
+    {
+        $this->teacherRepository = $teacher;
+    }
     public function index()
     {
-        $data['teacher'] = Teacher::all();
+        $data['teacher'] = $this->teacherRepository->all();
         return view('teacher.index', $data);
+    }
+    public function tableTeacher(Request $request)
+    {
+        if($request->ajax()){
+            $data = $this->teacherRepository->select('*')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row)
+                {
+                    $btn = '<a href="teacher/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning editTeacher">Update</a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteTeacher">Delete</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     /**
@@ -88,12 +104,12 @@ class TeacherController extends BaseController
     public function edit($id)
     {
         if (auth()->user()->role == 'teacher') {
-            $validation = Teacher::where('user_id', auth()->user()->id)->first();
+            $validation = $this->teacherRepository->where('user_id', auth()->user()->id)->first();
             if ($validation->id != $id) {
                 return redirect()->back();
             }
         }
-        $data['teacher'] = Teacher::find($id);
+        $data['teacher'] = $this->teacherRepository->find($id);
         $data['teacher']->phone = ltrim($data['teacher']->phone, '+62');
         if($data['teacher']->profile_image == null){
             $data['teacher']->profile_image = 'user-default-profile.png';
@@ -113,7 +129,7 @@ class TeacherController extends BaseController
     public function update(Request $request, $id)
     {
         if (auth()->user()->role == 'teacher') {
-            $validation = Teacher::where('user_id', auth()->user()->id)->first();
+            $validation = $this->teacherRepository->where('user_id', auth()->user()->id)->first();
             if ($validation->id != $id) {
                 return redirect()->back();
             }
@@ -129,7 +145,7 @@ class TeacherController extends BaseController
         $input = $request->all();
         
         //insert to teacher
-        $teacher = Teacher::find($id);
+        $teacher = $this->teacherRepository->find($id);
         $teacher->name = $input['name'];
         $teacher->nip = $input['nip'];
         $teacher->gender = $input['gender'];
@@ -172,7 +188,7 @@ class TeacherController extends BaseController
      */
     public function destroy($id)
     {
-        $teacher = Teacher::find($id);
+        $teacher = $this->teacherRepository->find($id);
         if($teacher){
             $user = User::find($teacher->user_id);
             $teacher->delete();
@@ -181,8 +197,10 @@ class TeacherController extends BaseController
             }
         }
         else {
-            return redirect('admin/teacher');
+            return response()->json([
+                'error' => 'Data not found.'
+            ]);
         }
-        return redirect('admin/teacher');
+        return response()->json(['success'=>'Grade deleted successfully.']);
     }
 }
