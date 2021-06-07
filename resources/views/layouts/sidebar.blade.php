@@ -36,6 +36,11 @@
                     class="nav-label">Kelas</span></a>
         </li>
 
+        <li class="{{ Request::segment(2) === 'schedule'  ? 'active' : null }}">
+            <a href="{{ route('schedule') }}"><i class="fa fa-book"></i><span
+                    class="nav-label">Jadwal Pelajaran</span></a>
+        </li>
+
         <li class="{{ Request::segment(2) === 'master' ? 'active' : null }}">
             <a href="#"><i class="fa fa-cogs"></i><span class="nav-label">Master Data</span><span
                     class="fa arrow"></span></a>

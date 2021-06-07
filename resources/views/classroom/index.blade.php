@@ -159,8 +159,7 @@ $('body').on('click', '.editClass', function() {
         $('#class_id').val(data.id);
         $('#grade_id').val(data.grade_id).trigger('change');
         $('#variable_id').val(data.variable_id).trigger('change');
-        $('#year_id').val(data.year_id).trigger('change')
-        console.log(data);
+        $('#year_id').val(data.year_id).trigger('change');
     })
 })
 
