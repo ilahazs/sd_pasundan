@@ -81,8 +81,8 @@ class HomeController extends BaseController
      */
     public function edit($id)
     {
-        $data['home'] = Home::find($id);
-        return view('master.home.edit', $data);
+        $data = Home::find($id);
+        return response()->json($data);
     }
 
     /**
@@ -109,7 +109,7 @@ class HomeController extends BaseController
             $home->content = $input['content'];
         }
         $home->save();
-        return redirect()->back();
+        return redirect()->route('master.home');
     }
 
     /**

@@ -22,13 +22,22 @@ Route::group(['middleware' => 'role:admin'],  function(){
         Route::post('/', 'TeacherController@store');        
         Route::get('{teacher}/delete', 'TeacherController@destroy');
     });
+
+    Route::prefix('schedule')->group(function()
+    {
+        Route::get('/', 'ScheduleController@index')->name('schedule');
+        Route::post('/', 'ScheduleController@store')->name('schedule.store');
+        Route::get('/{schedule}/edit', 'ScheduleController@edit')->name('schedule.edit');
+        Route::get('/{schedule}/delete', 'ScheduleController@destroy')->name('schedule.destroy');
+    });
+    
     Route::prefix('master')->group(function(){
         Route::prefix('home')->group(function(){
             Route::get('/', 'HomeController@index')->name('master.home');
-            Route::post('/', 'HomeController@store');
+            Route::post('/', 'HomeController@store')->name('master.home.store');
             Route::get('/create', 'HomeController@create')->name('master.home.create');
             Route::get('/{home}/delete', 'HomeController@destroy');
-            Route::get('/{home}/edit', 'HomeController@edit');
+            Route::get('/{home}/edit', 'HomeController@edit')->name('master.home.edit');
             Route::post('/{home}/update', 'HomeController@update');
         });
 
