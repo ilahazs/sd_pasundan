@@ -7,6 +7,7 @@ use DataTables;
 use App\Models\PivotClass;
 use App\Models\Grade;
 use App\Models\StudentClass;
+use App\Models\Student;
 use App\Models\GradeVariable;
 use App\Models\SchoolYear;
 
@@ -14,11 +15,13 @@ class ClassroomController extends BaseController
 {
     public function __construct(PivotClass $class,
                                 Grade $grade,
-                                StudentClass $student,
+                                StudentClass $student_class,
+                                Student $student,
                                 GradeVariable $variable,
                                 SchoolYear $year)
     {
         $this->classRepository = $class;
+        $this->studentClassRepository = $student_class;
         $this->studentRepository = $student;
         $this->gradeRepository = $grade;
         $this->variableRepository = $variable;
@@ -79,19 +82,20 @@ class ClassroomController extends BaseController
     public function detail($id)
     {
         $data['class'] = $this->classRepository->find($id);
-        $data['student'] = $this->studentRepository->where('class_id', '=', $id)->get();
+        $student_in_class = \DB::table('student_class')->where('class_id', '=', $id)->pluck('student_id');
+        $data['student'] = $this->studentRepository->whereNotIn('id', $student_in_class)->get();
         return view('classroom.detail', $data);
     }
 
     public function tableStudent($id, Request $request)
     {
         if($request->ajax()){
-            $data = $this->studentRepository->where('class_id', '=', $id)->get();
+            $data = $this->studentClassRepository->where('class_id', '=', $id)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row)
                 {
-                    $btn = '<a href="student/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning editStudent">Update</a>';
+                    $btn = '<a href="' . route('student') . '/' . $row->student_id . '/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning editStudent">Update</a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteStudent">Delete</a>';
                     return $btn;
                 })
@@ -100,8 +104,31 @@ class ClassroomController extends BaseController
         }
     }
 
-    public function addStudent(Request $request)
+    public function addStudent(Request $request, $id)
     {
-        return $request->all();
+        if($this->studentClassRepository->where('student_id', '=', $request->student_id)->count() > 0){
+            return response()->json([
+                'error' => 'Siswa telah terdaftar pada suatu kelas.'
+            ]);
+        };
+        $this->studentClassRepository->updateOrCreate(
+            ['id' => $request->sc_id],
+            [
+                'student_id' => $request->student_id,
+                'class_id' => $id
+            ]);
+        return response()->json(['success' => 'Class saved successfully.']);
+    }
+
+    public function removeStudent(Request $request, $id)
+    {
+        $data = $this->studentClassRepository->find($id);
+        if (!$data) {
+            return response()->json([
+                'error' => 'Data not found.'
+            ]);
+        }
+        $data->delete();
+        return response()->json(['success'=>'Student deleted successfully.']);
     }
 }
