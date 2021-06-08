@@ -13,6 +13,8 @@ Route::group(['middleware' => 'role:admin'],  function(){
         Route::post('/', 'ClassroomController@store')->name('classroom.store');
         Route::get('/{classroom}/edit', 'ClassroomController@edit')->name('classroom.edit');
         Route::get('/{classroom}/delete', 'ClassroomController@destroy')->name('classroom.destroy');
+        Route::get('/{classroom}/detail', 'ClassroomController@detail')->name('classroom.detail');
+        Route::get('/{classroom}/tablestudent', 'ClassroomController@tableStudent')->name('classroom.student');
     });
     
     Route::prefix('teacher')->group(function (){
