@@ -26,4 +26,9 @@ class PivotClass extends Model
         $year = SchoolYear::select('start_year', 'end_year')->where('id', '=', $this['year_id'])->first();
         return $year->start_year.'/'.$year->end_year;
     }
+
+    public function student_list()
+    {
+        return $this->hasMany('App\Models\StudentClass', 'class_id', 'id');
+    }
 }

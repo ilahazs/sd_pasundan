@@ -223,5 +223,9 @@ $('body').on('click', '.deleteClass', function() {
         }
     })
 })
+$('body').on('click', '.detailClass', function() {
+    var class_id = $(this).data("id");
+    window.location = "{{ route('classroom') }}" + '/' + class_id + '/detail';
+})
 </script>
 @endsection

@@ -26,4 +26,3 @@ Route::group(['middleware' => 'auth'],  function(){
         Route::get('myProfile', 'ProfileController@myProfile')->name('myProfile');
     });
 });
-// Route::get('/siswa')

@@ -13,6 +13,11 @@ Route::group(['middleware' => 'role:admin'],  function(){
         Route::post('/', 'ClassroomController@store')->name('classroom.store');
         Route::get('/{classroom}/edit', 'ClassroomController@edit')->name('classroom.edit');
         Route::get('/{classroom}/delete', 'ClassroomController@destroy')->name('classroom.destroy');
+        Route::get('/{classroom}/detail', 'ClassroomController@detail')->name('classroom.detail');
+        Route::get('/{classroom}/getstudent', 'ClassroomController@getStudent')->name('classroom.student.get');
+        Route::get('/{classroom}/tablestudent', 'ClassroomController@tableStudent')->name('classroom.student');
+        Route::post('/{classroom}/addStudent', 'ClassroomController@addStudent')->name('classroom.student.add');
+        Route::get('/{classroom}/removeStudent', 'ClassroomController@removeStudent')->name('classroom.student.remove');
     });
     
     Route::prefix('teacher')->group(function (){
