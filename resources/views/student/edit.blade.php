@@ -131,7 +131,7 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <div class="col-sm-4 col-sm-offset-2">
-                            <a href="{{url('admin/student')}}" class="btn btn-white btn-sm">Cancel</a>
+                            <a href="{{ URL::previous() }}" class="btn btn-white btn-sm">Cancel</a>
                             <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
                         </div>
                     </div>

@@ -73,14 +73,10 @@
                                     @csrf
                                     <input type="hidden" name="sc_id" id="sc_id">
                                     <div class="form-group">
-                                        <label for="student_id" class="col-form-label">Guru</label>
+                                        <label for="student_id" class="col-form-label">Nama Siswa</label>
                                         <form>
-                                            <select name="student_id" id="student_id" class="form-control"
-                                                data-toggle="select">
-                                                <option value="" selected disabled>- PILIH SISWA -</option>
-                                                @foreach($student as $row)
-                                                <option value="{{$row->id}}">{{$row->name}}</option>
-                                                @endforeach
+                                            <select name="student_id[]" id="student_id" class="form-control"
+                                                data-toggle="select" multiple>
                                             </select>
                                         </form>
                                     </div>
@@ -103,7 +99,7 @@
 <script src="{{asset('js/plugins/dataTables/datatables.min.js')}}"></script>
 <script src="{{asset('js/plugins/dataTables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.4/dist/sweetalert2.all.min.js"></script>
-<script src="{{asset('js/plugins/select2/select2.full.min.js')}}"></script>\
+<script src="{{asset('js/plugins/select2/select2.full.min.js')}}"></script>
 <script>
 $(document).ready(function() {
     var class_id = $('.dataTables-student').data("id");
@@ -138,13 +134,19 @@ $(document).ready(function() {
     $('#refreshTableStudent').click(function() {
         tableStudent.draw();
     })
-    
+
     $('#createNewStudent').click(function() {
         $('#scForm').trigger("reset");
         $('#scModal').modal('show');
         $('#student_id').select2({
             dropdownParent: $('#scModal')
         });
+        $('#student_id').find('option').remove();
+        $.get("{{ route('classroom') }}" + '/' + class_id + '/getstudent', function(data) {
+            $.each(data, function(row, value) {
+                $('#student_id').append('<option value="'+ value.id +'">'+ value.name +'</option>');
+            });
+        })
     })
 
     $('#saveBtn').click(function(e) {
@@ -170,7 +172,7 @@ $(document).ready(function() {
     })
 
     $(document).on('click', '.deleteStudent', function(e) {
-        var class_id = $(this).data("id");
+        var student_class_id = $(this).data("id");
         $(this).hide();
         Swal.fire({
             title: 'Hapus siswa?',
@@ -184,7 +186,8 @@ $(document).ready(function() {
             if (result.value == true) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('classroom') }}" + '/' + class_id + '/removeStudent',
+                    url: "{{ route('classroom') }}" + '/' + student_class_id +
+                        '/removeStudent',
                     success: function(data) {
                         // console.log(data);
                         if (data.error) {

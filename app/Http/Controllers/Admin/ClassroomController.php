@@ -82,11 +82,17 @@ class ClassroomController extends BaseController
     public function detail($id)
     {
         $data['class'] = $this->classRepository->find($id);
-        $student_in_class = \DB::table('student_class')->where('class_id', '=', $id)->pluck('student_id');
-        $data['student'] = $this->studentRepository->whereNotIn('id', $student_in_class)->get();
+        
         return view('classroom.detail', $data);
     }
 
+    public function getStudent($id)
+    {
+        $student_in_class = \DB::table('student_class')->where('class_id', '=', $id)->pluck('student_id');
+        $data = $this->studentRepository->whereNotIn('id', $student_in_class)->get();
+        return response()->json($data);
+    }
+    
     public function tableStudent($id, Request $request)
     {
         if($request->ajax()){
@@ -106,18 +112,20 @@ class ClassroomController extends BaseController
 
     public function addStudent(Request $request, $id)
     {
-        if($this->studentClassRepository->where('student_id', '=', $request->student_id)->count() > 0){
-            return response()->json([
-                'error' => 'Siswa telah terdaftar pada suatu kelas.'
+        $student_id = $request->student_id;
+        $response = ["success" => "Class saved successfully."];
+        foreach ($student_id as $student) {
+            if($this->studentClassRepository->where('student_id', '=', $student)->count() > 0){
+                $response = ['error' => 'Siswa telah terdaftar pada suatu kelas.'];
+            };
+            $this->studentClassRepository->updateOrCreate(
+                ['id' => $request->sc_id],
+                [
+                    'student_id' => $student,
+                    'class_id' => $id
             ]);
-        };
-        $this->studentClassRepository->updateOrCreate(
-            ['id' => $request->sc_id],
-            [
-                'student_id' => $request->student_id,
-                'class_id' => $id
-            ]);
-        return response()->json(['success' => 'Class saved successfully.']);
+        }
+        return response()->json($response);
     }
 
     public function removeStudent(Request $request, $id)
