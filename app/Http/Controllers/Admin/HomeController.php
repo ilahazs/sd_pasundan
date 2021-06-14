@@ -5,20 +5,36 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use URL;
+use DataTables;
 use Storage;
 use App\Models\Home;
 
 class HomeController extends BaseController
 {
+    public function __construct(Home $home)
+    {
+        $this->homeRepository = $home;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['home'] = Home::all();
-        return view('master.home.index', $data);
+        if($request->ajax()) {
+            $data = $this->homeRepository->select('*')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row)
+                {
+                    $btn = '<a href="javascript:void(0)" id="editContent" class="btn-warning btn btn-sm mr-2" data-toggle="tooltip" data-placement="top" title="Edit" data-id="'.$row->id.'">Edit</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('master.home.index');
     }
 
     /**
@@ -97,6 +113,7 @@ class HomeController extends BaseController
         $input = $request->all();
         $home = Home::find($id);
         $url = URL::to('/');
+        $content = null;
         if($home['type'] == 'image'){
             $image = $request->file('content');
             $nama_file = time()."_".$image->getClientOriginalName();
@@ -106,10 +123,10 @@ class HomeController extends BaseController
             $home->content = $nama_file;
         }
         else{
-            $home->content = $input['content'];
+            return $id;
         }
         $home->save();
-        return redirect()->route('master.home');
+        return response()->json(['success'=>'Home updated successfully.']);    
     }
 
     /**

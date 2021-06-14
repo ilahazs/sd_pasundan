@@ -35,7 +35,7 @@
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
-                    <table class="table table-striped dataTables">
+                    <table class="table table-striped dataTables-home">
                         <thead>
                             <tr>
                                 <th>Section</th>
@@ -45,23 +45,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($home as $row)
-                            <tr>
-                                <td>{{$row->section}}</td>
-                                <td>{{$row->content}}</td>
-                                <td>{{$row->type}}</td>
-                                <td class="dataTables-empty">
-                                    <div class="btn-group">
-                                        <a href="javascript:void(0)" id="editContent"
-                                            class="btn-warning btn btn-sm mr-2" data-toggle="tooltip"
-                                            data-placement="top" title="Edit" data-id="{{$row->id}}">Edit</a>
-                                        <!-- <a href="home/{{$row->id}}/delete"
-                                            class="edit btn btn-danger btn-sm delete-btn mr-2" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"><i class="fa fa-trash"></i></a> -->
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
+                            
                         </tbody>
                     </table>
                 </div>
@@ -74,7 +58,7 @@
                                 <h5 class="modal-title">Tambah Mata Pelajaran</h5>
                             </div>
                             <div class="modal-body">
-                                <form id="contentForm" name="contentForm" onkeydown="return event.key != 'Enter';">
+                                <form id="contentForm" name="contentForm" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
                                     @csrf
                                     <input type="hidden" name="content_id" id="content_id">
                                     <div class="form-group">
@@ -83,14 +67,19 @@
                                             id="section" class="form-control">
                                     </div>
                                     <div class="form-group row">
-                                        <label for="Name" class="col-form-label col-lg-12" id="previous_content_label">Previous Content</label>
+                                        <label for="Name" class="col-form-label col-lg-12"
+                                            id="previous_content_label">Previous Content</label>
                                         <div class="col-lg-12 text-center">
-                                            <img class="form-control" id="previous_content" alt="previous-image">
+                                            <img class="form-control" style="height:auto !important;" id="previous_content" alt="previous-image">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="content" class="col-form-label">New Content</label>
-                                        <input type="file" class="form-control" name="content" id="content">
+                                        <div class="custom-file">
+                                            <input type="file" name="content" id="content"
+                                                class="custom-file-input">
+                                            <label for="logo" class="custom-file-label">Choose file...</label>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -107,6 +96,8 @@
 </div>
 @endsection
 @section('scripts')
+<script src="{{asset('js/plugins/dataTables/datatables.min.js')}}"></script>
+<script src="{{asset('js/plugins/dataTables/dataTables.bootstrap4.min.js')}}"></script>
 <script>
 $(function() {
     $.ajaxSetup({
@@ -114,6 +105,33 @@ $(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
+
+    var tableHome = $('.dataTables-home').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('master.home') }}",
+        columns: [{
+                data: 'section',
+                name: 'section'
+            },
+            {
+                data: 'content',
+                name: 'content'
+            },
+            {
+                data: 'type',
+                name: 'type'
+            },
+            {
+                data: 'action',
+                name: 'action',
+                className: 'dataTables_empty',
+                orderable: false,
+                searchable: false
+            }
+        ]
+    })
+    
     $('body').on('click', '#editContent', function() {
         var content_id = $(this).data("id");
         $.get("{{ route('master.home') }}" + '/' + content_id + '/edit', function(data) {
@@ -122,16 +140,18 @@ $(function() {
             $('#content_id').val(data.id);
             $('#section').val(data.section);
             $('#previous_content_label').html("Previous Content");
+            $('#previous_content').attr("class", "form-control");
             $('#previous_content').attr("src", data.image_link);
-            console.log(data);
         })
     })
-    $('body').on('change', '#content', function() {
+
+    $('.custom-file-input').on('change', function() {
         var content = $(this).get(0).files[0];
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
         if (content) {
             var reader = new FileReader();
             reader.onload = function() {
-                console.log(reader.result);
                 $('#previous_content').attr("src", reader.result);
                 $('#previous_content_label').html("New Content");
                 $('#previous_content').attr("style", "height:235px; width:auto;");
@@ -143,17 +163,24 @@ $(function() {
         e.preventDefault();
         $(this).html('Saving').attr('disabled', true);
 
+        var content_id = $('#content_id').val();
+        var contentForm = $('#contentForm')[0];
+        var formData = new FormData(contentForm);
+        console.log(content_id);
+
         $.ajax({
-            data: $('#contentForm').serialize(),
-            url: "{{ route('course.store') }}",
+            data: formData,
+            url: "{{ route('master.home') }}" + "/" + content_id + "/update",
             type: "POST",
             dataType: 'JSON',
+            enctype: 'multipart/form-data',
+            processData: false,  // Important!
+            contentType: false,
             success: function(data) {
                 $('#saveBtn').html('Save Changes').attr('disabled', false);
-                $('#courseForm').trigger("reset");
-                $('#courseModal').modal('hide');
-                table.draw();
-                console.log(data);
+                $('#contentForm').trigger("reset");
+                $('#contentModal').modal('hide');
+                tableHome.draw();
             },
             error: function(data) {
                 console.log('Error:', data);
