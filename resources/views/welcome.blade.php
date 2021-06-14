@@ -129,7 +129,7 @@
                     <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
                 </div>
                 <div class="m-t-lg">
-                    <div class="features-icon">900</div>
+                    <div class="features-icon">{{$total_student}}</div>
                     <h2>Siswa</h2>
                     <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
                 </div>
@@ -139,12 +139,12 @@
             </div>
             <div class="col-md-3 text-center wow fadeInRight">
                 <div>
-                    <div class="features-icon">36</div>
+                    <div class="features-icon">{{$total_teacher}}</div>
                     <h2>Guru</h2>
                     <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
                 </div>
                 <div class="m-t-lg">
-                    <div class="features-icon">20</div>
+                    <div class="features-icon">{{$total_classroom}}</div>
                     <h2>Kelas</h2>
                     <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
                 </div>
