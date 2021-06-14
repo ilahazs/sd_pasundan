@@ -31,7 +31,12 @@ class HomeController extends BaseController
                     $btn = '<a href="javascript:void(0)" id="editContent" class="btn-warning btn btn-sm mr-2" data-toggle="tooltip" data-placement="top" title="Edit" data-id="'.$row->id.'">Edit</a>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('image', function ($row)
+                {
+                    $btn = '<img src="'.$row->image_link.'" style="max-width:200px;">';
+                    return $btn;
+                })
+                ->rawColumns(['action', 'image'])
                 ->make(true);
         }
         return view('master.home.index');

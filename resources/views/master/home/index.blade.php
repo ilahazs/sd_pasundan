@@ -40,7 +40,6 @@
                             <tr>
                                 <th>Section</th>
                                 <th>Content</th>
-                                <th>Type</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -115,12 +114,11 @@ $(function() {
                 name: 'section'
             },
             {
-                data: 'content',
-                name: 'content'
-            },
-            {
-                data: 'type',
-                name: 'type'
+                data: 'image',
+                name: 'image',
+                className: 'dataTables_empty',
+                orderable: false,
+                searchable: false
             },
             {
                 data: 'action',
@@ -154,7 +152,7 @@ $(function() {
             reader.onload = function() {
                 $('#previous_content').attr("src", reader.result);
                 $('#previous_content_label').html("New Content");
-                $('#previous_content').attr("style", "height:235px; width:auto;");
+                $('#previous_content').attr("style", "height:auto; width:100%;");
             }
             reader.readAsDataURL(content);
         }
