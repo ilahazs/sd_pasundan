@@ -15,30 +15,33 @@
                 </ul>
             </div>
         </li>
+        @if(auth()->user()->role == 'student')
+        <li class="{{ Request::segment(2) === 'myProfile'  ? 'active' : null }}">
+            <a href="{{ route('myProfile') }}"><i class="fa fa-line-chart"></i><span
+                    class="nav-label">Dashboard</span></a>
+        </li>
+        @endif
+        @if(in_array(auth()->user()->role, ['admin', 'teacher']))
         <li class="{{ Request::segment(2) === 'dashboard'  ? 'active' : null }}">
             <a href="{{ route('dashboard') }}"><i class="fa fa-line-chart"></i><span
                     class="nav-label">Dashboard</span></a>
         </li>
-        @if(in_array(auth()->user()->role, ['admin', 'teacher']))
         <li class="{{ Request::segment(2) === 'student'  ? 'active' : null }}">
-            <a href="{{ route('student') }}"><i class="fa fa-address-book"></i><span
-                    class="nav-label">Siswa</span></a>
+            <a href="{{ route('student') }}"><i class="fa fa-address-book"></i><span class="nav-label">Siswa</span></a>
         </li>
         @endif
         @if(auth()->user()->role == 'admin')
         <li class="{{ Request::segment(2) === 'teacher'  ? 'active' : null }}">
-            <a href="{{ route('teacher') }}"><i class="fa fa-address-card"></i><span
-                    class="nav-label">Guru</span></a>
+            <a href="{{ route('teacher') }}"><i class="fa fa-address-card"></i><span class="nav-label">Guru</span></a>
         </li>
-        
+
         <li class="{{ Request::segment(2) === 'classroom'  ? 'active' : null }}">
-            <a href="{{ route('classroom') }}"><i class="fa fa-university"></i><span
-                    class="nav-label">Kelas</span></a>
+            <a href="{{ route('classroom') }}"><i class="fa fa-university"></i><span class="nav-label">Kelas</span></a>
         </li>
 
         <li class="{{ Request::segment(2) === 'schedule'  ? 'active' : null }}">
-            <a href="{{ route('schedule') }}"><i class="fa fa-book"></i><span
-                    class="nav-label">Jadwal Pelajaran</span></a>
+            <a href="{{ route('schedule') }}"><i class="fa fa-book"></i><span class="nav-label">Jadwal
+                    Pelajaran</span></a>
         </li>
 
         <li class="{{ Request::segment(2) === 'master' ? 'active' : null }}">

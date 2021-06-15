@@ -14,6 +14,9 @@ class DashboardController extends BaseController
      */
     public function index()
     {
+        if (auth()->user()->role == 'student') {
+            return redirect()->route('myProfile');
+        }
         return view('dashboard.index');
     }
 

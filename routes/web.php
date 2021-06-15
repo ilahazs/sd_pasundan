@@ -24,5 +24,8 @@ Route::group(['middleware' => 'auth'],  function(){
     });
     Route::group(['prefix' => 'profile'], function (){
         Route::get('myProfile', 'ProfileController@myProfile')->name('myProfile');
+        Route::get('myProfile/{myProfile}/editPassword', 'ProfileController@editPassword')->name('editPassword');
+        Route::post('myProfile/{myProfile}/storePassword', 'ProfileController@storePassword')->name('storePassword');
+        Route::get('tableschedule', 'ProfileController@getSchedule')->name('getSchedule');
     });
 });
