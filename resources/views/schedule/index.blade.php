@@ -185,7 +185,6 @@ $(function() {
                 $('#courseScheduleForm').trigger("reset");
                 $('#courseScheduleModal').modal('hide');
                 tableCourseSchedule.draw();
-                console.log(data);
             },
             error: function(data) {
                 console.log('Error:', data);

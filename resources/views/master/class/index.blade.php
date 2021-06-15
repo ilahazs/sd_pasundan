@@ -116,7 +116,6 @@ $(function() {
                     type: "GET",
                     url: "{{ route('master.grade') }}" + '/' + grade_id + '/delete',
                     success: function(data) {
-                        // console.log(data);
                         if (data.error) {
                             Swal.fire(
                                 'Error!',
@@ -221,7 +220,6 @@ $(function() {
                     url: "{{ route('master.variable') }}" + '/' + variable_id +
                         '/delete',
                     success: function(data) {
-                        // console.log(data);
                         if (data.error) {
                             Swal.fire(
                                 'Error!',

@@ -153,7 +153,6 @@ $('body').on('click', '.editCourseTeacher', function() {
         $('#teacher_id').val(data.teacher_id).trigger('change');
         $('#course_id').val(data.course_id).trigger('change');
         $('#year_id').val(data.year_id).trigger('change');
-        console.log(data);
     })
 })
 
@@ -171,7 +170,6 @@ $('#saveBtn').click(function(e) {
             $('#ctForm').trigger("reset");
             $('#ctModal').modal('hide');
             table.draw();
-            console.log(data);
         },
         error: function(data) {
             console.log('Error:', data);
@@ -195,7 +193,6 @@ $('body').on('click', '.deleteCourseTeacher', function() {
                 type: "GET",
                 url: "{{ route('course-teacher') }}" + '/' + class_id + '/delete',
                 success: function(data) {
-                    // console.log(data);
                     if (data.error) {
                         Swal.fire(
                             'Error!',

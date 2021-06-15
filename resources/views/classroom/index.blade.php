@@ -177,7 +177,6 @@ $('#saveBtn').click(function(e) {
             $('#classForm').trigger("reset");
             $('#classModal').modal('hide');
             table.draw();
-            console.log(data);
         },
         error: function(data) {
             console.log('Error:', data);
@@ -201,7 +200,6 @@ $('body').on('click', '.deleteClass', function() {
                 type: "GET",
                 url: "{{ route('classroom') }}" + '/' + class_id + '/delete',
                 success: function(data) {
-                    // console.log(data);
                     if (data.error) {
                         Swal.fire(
                             'Error!',

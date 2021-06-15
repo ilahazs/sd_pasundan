@@ -164,7 +164,6 @@ $(function() {
         var content_id = $('#content_id').val();
         var contentForm = $('#contentForm')[0];
         var formData = new FormData(contentForm);
-        console.log(content_id);
 
         $.ajax({
             data: formData,

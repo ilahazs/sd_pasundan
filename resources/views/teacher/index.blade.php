@@ -120,7 +120,6 @@ $(document).ready(function() {
                     type: "GET",
                     url: "{{ route('teacher') }}" + '/' + teacher_id + '/delete',
                     success: function(data) {
-                        // console.log(data);
                         if (data.error) {
                             Swal.fire(
                                 'Error!',

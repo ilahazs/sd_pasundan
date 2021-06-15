@@ -150,7 +150,6 @@ $(function() {
             $('#course_id').val(data.id);
             $('#course_name').val(data.course_name);
             $('#course_code').val(data.course_code);
-            console.log(data);
         })
     })
 
@@ -168,7 +167,6 @@ $(function() {
                 $('#courseForm').trigger("reset");
                 $('#courseModal').modal('hide');
                 table.draw();
-                console.log(data);
             },
             error: function(data) {
                 console.log('Error:', data);
@@ -193,7 +191,6 @@ $(function() {
                     type: "GET",
                     url: "{{ route('course') }}" + '/' + course_id + '/delete',
                     success: function(data) {
-                        // console.log(data);
                         if (data.error) {
                             Swal.fire(
                                 'Error!',

@@ -189,7 +189,6 @@ $(document).ready(function() {
                     url: "{{ route('classroom') }}" + '/' + student_class_id +
                         '/removeStudent',
                     success: function(data) {
-                        // console.log(data);
                         if (data.error) {
                             Swal.fire(
                                 'Error!',
