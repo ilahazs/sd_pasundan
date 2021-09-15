@@ -29,14 +29,13 @@ class StudentController extends BaseController
 
     public function tableStudent(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $data = $this->studentRepository->select('*')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row)
-                {
-                    $btn = '<a href="student/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning editStudent">Update</a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteStudent">Delete</a>';
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="student/' . $row->id . '/edit" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-warning editStudent">Update</a>';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger deleteStudent">Delete</a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -73,20 +72,20 @@ class StudentController extends BaseController
         ]);
 
         $input = $request->all();
-        
+
         //insert to user
-        $user = New User;
+        $user = new User;
         $user->name = $input['name'];
         $user->email = $input['email'];
         $user->password = Hash::make($input['password']);
         $user->role = 'student';
-        if($user->save()){
+        if ($user->save()) {
             $student = new Student;
             $student->name = $input['name'];
             $student->nis = $input['nis'];
             $student->nisn = $input['nisn'];
             $student->gender = $input['gender'];
-            $student->phone = '+62'.$input['phone'];
+            $student->phone = '+62' . $input['phone'];
             $student->user_id = $user->id;
             $student->save();
         }
@@ -138,26 +137,26 @@ class StudentController extends BaseController
         ]);
 
         $input = $request->all();
-        
+
         //insert to user
         $student = $this->studentRepository->find($id);
         $student->name = $input['name'];
         $student->nis = $input['nis'];
         $student->nisn = $input['nisn'];
         $student->gender = $input['gender'];
-        $student->phone = '+62'.$input['phone'];
+        $student->phone = '+62' . $input['phone'];
 
         $user = User::find($student->user_id);
         $user->name = $input['name'];
         $user->email = $input['email'];
         $user->role = 'student';
-        if($input['password']){
+        if ($input['password']) {
             $request->validate([
                 'password' => 'required|min:8',
             ]);
             $user->password = Hash::make($input['password']);
-        }            
-        if($user->update()){
+        }
+        if ($user->update()) {
             $student->update();
         }
         return redirect('admin/student');
@@ -172,18 +171,17 @@ class StudentController extends BaseController
     public function destroy($id)
     {
         $siswa = $this->studentRepository->find($id);
-        if($siswa){
+        if ($siswa) {
             $user = User::find($siswa->user_id);
             $siswa->delete();
-            if($user){
+            if ($user) {
                 $user->delete();
             }
-        }
-        else {
+        } else {
             return response()->json([
                 'error' => 'Data not found.'
             ]);
         }
-        return response()->json(['success'=>'Grade deleted successfully.']);
+        return response()->json(['success' => 'Grade deleted successfully.']);
     }
 }
